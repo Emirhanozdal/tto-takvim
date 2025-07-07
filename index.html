@@ -39,6 +39,7 @@
                 <button id="next-month-btn" class="nav-btn">></button>
             </div>
             <div class="header-actions">
+                 <button id="manage-projects-btn" class="hidden">Projeleri Yönet</button>
                  <button id="back-to-year-view-btn">Yıla Dön</button>
                  <button id="today-btn">Bugün</button>
             </div>
@@ -62,6 +63,7 @@
                 <div id="event-inputs">
                     <div class="form-group"><label for="event-title-input">Etkinlik Başlığı</label><input type="text" id="event-title-input" required></div>
                     <div class="form-group"><label for="event-date-input">Tarih</label><input type="date" id="event-date-input" required></div>
+                    <div class="form-group"><label for="event-image-input">Görsel URL (İsteğe Bağlı)</label><input type="url" id="event-image-input" placeholder="https://ornek.com/gorsel.jpg"></div>
                 </div>
                 <div id="project-inputs" class="hidden">
                      <div class="form-group"><label for="project-title-input">Proje Başlığı</label><input type="text" id="project-title-input"></div>
@@ -69,6 +71,30 @@
                 </div>
                 <button type="submit" class="form-button fire-shadow">Kaydı Ekle</button>
             </form>
+        </div>
+    </div>
+
+    <div id="manage-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3 id="manage-modal-title" class="modal-title">Kayıtları Yönet</h3>
+            <p id="manage-modal-date"></p>
+            <ul id="entry-list"></ul>
+        </div>
+    </div>
+
+    <!-- YENİ ETKİNLİK DETAY MODALI -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <div id="details-image-container" class="hidden">
+                <img id="details-image" src="" alt="Etkinlik Görseli">
+            </div>
+            <div id="details-content">
+                <h3 id="details-title"></h3>
+                <p id="details-date"></p>
+                <button id="manage-event-btn" class="form-button fire-shadow">Bu Günü Yönet</button>
+            </div>
         </div>
     </div>
     
