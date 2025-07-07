@@ -8,10 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- NETLIFY IDENTITY WIDGET - GÜVENLİK İÇİN GEREKLİ -->
+    <!-- NETLIFY IDENTITY WIDGET -->
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+
+    <!-- VİDEO ARKA PLANI -->
+    <video autoplay muted loop id="video-background">
+        <source src="background.mp4" type="video/mp4">
+        Tarayıcınız video etiketini desteklemiyor.
+    </video>
 
     <!-- YIL GÖRÜNÜMÜ (ANA EKRAN) -->
     <div id="year-view" class="container">
@@ -22,7 +28,7 @@
                 <h2 id="year-str" class="header-title"></h2>
                 <button id="next-year-btn" class="nav-btn">></button>
             </div>
-            <!-- Netlify Identity bu div'i otomatik olarak login/logout butonu ile dolduracak -->
+            <!-- Netlify Identity butonu buraya gelecek -->
             <div class="header-actions" data-netlify-identity-button></div>
         </header>
         <div id="year-view-body"></div>
