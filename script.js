@@ -1,5 +1,5 @@
+// script.js - GÜNCELLENMİŞ KOD
 document.addEventListener('DOMContentLoaded', () => {
-    // --- GLOBAL DEĞİŞKENLER VE DOM ELEMENTLERİ ---
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
     const yearStr = document.getElementById('year-str');
@@ -21,22 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
-    // --- ADMİN MODU YÖNETİMİ ---
     const enableAdminMode = () => document.body.classList.add('admin-mode');
     const disableAdminMode = () => document.body.classList.remove('admin-mode');
 
-    // --- NETLIFY IDENTITY ENTEGRASYONU ---
     if (window.netlifyIdentity) {
         netlifyIdentity.on('init', user => { if (user) enableAdminMode(); });
         netlifyIdentity.on('login', user => { enableAdminMode(); netlifyIdentity.close(); });
         netlifyIdentity.on('logout', () => disableAdminMode());
     }
 
-    // --- GÖRÜNÜM YÖNETİMİ ---
     const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
     const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
 
-    // --- YIL GÖRÜNÜMÜ (YENİ MİNİ TAKVİMLER) ---
     const renderYearView = () => {
         yearStr.textContent = currentYear;
         yearViewBody.innerHTML = '';
@@ -44,54 +40,36 @@ document.addEventListener('DOMContentLoaded', () => {
             const miniCalendar = document.createElement('div');
             miniCalendar.className = 'mini-calendar';
             miniCalendar.addEventListener('click', () => { currentDate = new Date(currentYear, i, 1); showMonthView(); });
-
             const header = document.createElement('div');
             header.className = 'mini-calendar-header';
             header.textContent = monthNames[i];
-            
             const dayNamesContainer = document.createElement('div');
             dayNamesContainer.className = 'mini-day-names';
             dayNames.forEach(name => dayNamesContainer.innerHTML += `<div>${name}</div>`);
-            
             const dayGrid = document.createElement('div');
             dayGrid.className = 'mini-day-grid';
-
             const firstDay = new Date(currentYear, i, 1);
             const daysInMonth = new Date(currentYear, i + 1, 0).getDate();
             let startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-
-            // Boş günleri ekle
             for (let j = 0; j < startDay; j++) { dayGrid.innerHTML += `<div class="mini-day"></div>`; }
-            
-            // Ayın günlerini ekle
             for (let j = 1; j <= daysInMonth; j++) {
                 const dayEl = document.createElement('div');
                 dayEl.className = 'mini-day';
                 dayEl.textContent = j;
-
                 const dateKey = `${currentYear}-${String(i + 1).padStart(2, '0')}-${String(j).padStart(2, '0')}`;
                 if (entries[dateKey]) dayEl.classList.add('has-event');
-                
                 const monthKey = `${currentYear}-${String(i + 1).padStart(2, '0')}`;
-                if (entries[monthKey] && entries[monthKey].some(e => e.type === 'project')) {
-                    dayEl.classList.add('is-project');
-                }
-
+                if (entries[monthKey] && entries[monthKey].some(e => e.type === 'project')) dayEl.classList.add('is-project');
                 const today = new Date();
-                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) {
-                    dayEl.classList.add('is-today');
-                }
-                
+                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) dayEl.classList.add('is-today');
                 dayGrid.appendChild(dayEl);
             }
-
             miniCalendar.append(header, dayNamesContainer, dayGrid);
             yearViewBody.appendChild(miniCalendar);
         }
     }
     
-    // --- AY GÖRÜNÜMÜ (SABİT 42 GÜN) ---
-    const renderCalendar = () => { /* Bu fonksiyon önceki versiyondaki gibi kalabilir, değişiklik yok */
+    const renderCalendar = () => {
         calendarBody.innerHTML = '';
         const year = currentDate.getFullYear(); const month = currentDate.getMonth();
         monthYearStr.textContent = `${monthNames[month]} ${year}`;
@@ -119,28 +97,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- MODAL & FORM FONKSİYONLARI ---
-    const setupModal = (modal) => { /* Değişiklik yok */
+    const setupModal = (modal) => {
         const closeBtn = modal.querySelector('.close-btn');
         closeBtn.addEventListener('click', () => modal.style.display = 'none');
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
     }
     setupModal(entryModal);
-    addEntryBtn.addEventListener('click', () => { /* Değişiklik yok */
-        entryModal.querySelector('form').reset(); toggleFormInputs(); entryModal.style.display = 'flex';
-    });
-
+    addEntryBtn.addEventListener('click', () => { entryModal.querySelector('form').reset(); toggleFormInputs(); entryModal.style.display = 'flex'; });
     const entryForm = document.getElementById('entry-form');
     const entryTypeRadios = document.querySelectorAll('input[name="entry-type"]');
-    
-    const toggleFormInputs = () => { /* Değişiklik yok */
+    const toggleFormInputs = () => {
          const isEvent = document.getElementById('type-event').checked;
          document.getElementById('event-inputs').classList.toggle('hidden', !isEvent); document.getElementById('project-inputs').classList.toggle('hidden', isEvent);
          document.getElementById('event-title-input').required = isEvent; document.getElementById('event-date-input').required = isEvent;
          document.getElementById('project-title-input').required = !isEvent; document.getElementById('project-month-input').required = !isEvent;
     }
-
-    entryForm.addEventListener('submit', (e) => { /* Değişiklik yok */
+    entryForm.addEventListener('submit', (e) => {
         e.preventDefault(); const type = document.querySelector('input[name="entry-type"]:checked').value;
         let key, entry;
         if (type === 'event') {
@@ -156,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entryModal.style.display = 'none';
     });
     
-    // --- NAVİGASYON EVENTLERİ ---
     prevYearBtn.addEventListener('click', () => { currentYear--; renderYearView(); });
     nextYearBtn.addEventListener('click', () => { currentYear++; renderYearView(); });
     prevMonthBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
@@ -164,7 +135,5 @@ document.addEventListener('DOMContentLoaded', () => {
     todayBtn.addEventListener('click', () => { currentDate = new Date(); showMonthView(); });
     backToYearViewBtn.addEventListener('click', showYearView);
     entryTypeRadios.forEach(radio => radio.addEventListener('change', toggleFormInputs));
-
-    // --- UYGULAMA BAŞLANGICI ---
     showYearView();
 });
