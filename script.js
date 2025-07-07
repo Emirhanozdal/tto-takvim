@@ -1,5 +1,5 @@
-// script.js - GÜNCELLENMİŞ KOD
 document.addEventListener('DOMContentLoaded', () => {
+    // --- GLOBAL DEĞİŞKENLER VE DOM ELEMENTLERİ ---
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
     const yearStr = document.getElementById('year-str');
@@ -21,18 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
+    // --- ADMİN MODU YÖNETİMİ ---
     const enableAdminMode = () => document.body.classList.add('admin-mode');
     const disableAdminMode = () => document.body.classList.remove('admin-mode');
 
+    // --- NETLIFY IDENTITY ENTEGRASYONU ---
     if (window.netlifyIdentity) {
         netlifyIdentity.on('init', user => { if (user) enableAdminMode(); });
         netlifyIdentity.on('login', user => { enableAdminMode(); netlifyIdentity.close(); });
         netlifyIdentity.on('logout', () => disableAdminMode());
     }
 
+    // --- GÖRÜNÜM YÖNETİMİ ---
     const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
     const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
 
+    // --- YIL GÖRÜNÜMÜ ---
     const renderYearView = () => {
         yearStr.textContent = currentYear;
         yearViewBody.innerHTML = '';
@@ -61,7 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const monthKey = `${currentYear}-${String(i + 1).padStart(2, '0')}`;
                 if (entries[monthKey] && entries[monthKey].some(e => e.type === 'project')) dayEl.classList.add('is-project');
                 const today = new Date();
-                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) dayEl.classList.add('is-today');
+                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) {
+                    dayEl.classList.add('is-today');
+                }
                 dayGrid.appendChild(dayEl);
             }
             miniCalendar.append(header, dayNamesContainer, dayGrid);
@@ -69,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // --- AY GÖRÜNÜMÜ ---
     const renderCalendar = () => {
         calendarBody.innerHTML = '';
         const year = currentDate.getFullYear(); const month = currentDate.getMonth();
@@ -97,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- MODAL & FORM FONKSİYONLARI ---
     const setupModal = (modal) => {
         const closeBtn = modal.querySelector('.close-btn');
         closeBtn.addEventListener('click', () => modal.style.display = 'none');
@@ -128,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entryModal.style.display = 'none';
     });
     
+    // --- NAVİGASYON EVENTLERİ ---
     prevYearBtn.addEventListener('click', () => { currentYear--; renderYearView(); });
     nextYearBtn.addEventListener('click', () => { currentYear++; renderYearView(); });
     prevMonthBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
@@ -135,5 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     todayBtn.addEventListener('click', () => { currentDate = new Date(); showMonthView(); });
     backToYearViewBtn.addEventListener('click', showYearView);
     entryTypeRadios.forEach(radio => radio.addEventListener('change', toggleFormInputs));
+
+    // --- UYGULAMA BAŞLANGICI ---
     showYearView();
 });
