@@ -37,7 +37,9 @@ body.admin-mode .mini-calendar:hover { transform: translateY(-4px); box-shadow: 
 .mini-day.is-project { background-color: var(--light-orange) !important; }
 .mini-day.is-today { background-color: var(--primary-blue); color: white; }
 
-.calendar-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
+/* BİRLEŞTİRİLMİŞ TAKVİM STİLLERİ */
+#calendar-grid-container { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
+.day-name { text-align: center; font-weight: 600; color: var(--light-text-color); margin-bottom: 0.5rem; }
 .day { min-height: 110px; border: 1px solid #F1F3F5; border-radius: 8px; position: relative; display: flex; flex-direction: column; padding: 0.5rem; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.7); }
 .day.clickable:hover { transform: translateY(-2px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
 .day-number { font-weight: 500; margin-bottom: 0.5rem; }
