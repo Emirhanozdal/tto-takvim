@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
+    const userPanel = document.getElementById('user-panel');
     const yearStr = document.getElementById('year-str');
     const yearViewBody = document.getElementById('year-view-body');
     const monthYearStr = document.getElementById('month-year-str');
-    const calendarGridContainer = document.getElementById('calendar-grid-container'); // Değişti
+    const calendarGridContainer = document.getElementById('calendar-grid-container');
     const entryModal = document.getElementById('entry-modal');
     const manageModal = document.getElementById('manage-modal');
     const detailsModal = document.getElementById('details-modal');
-    const addEntryBtn = document.getElementById('add-entry-btn');
 
     // State
     let currentDate = new Date();
@@ -23,6 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateAdminStatus = (user) => {
         isAdmin = !!user;
         document.body.classList.toggle('admin-mode', isAdmin);
+        
+        if (user) {
+            userPanel.innerHTML = `<span>${user.email}</span><button id="logout-btn">Çıkış Yap</button>`;
+            document.getElementById('logout-btn').addEventListener('click', () => netlifyIdentity.logout());
+        } else {
+            // Let Netlify's widget rebuild the login button
+            userPanel.innerHTML = '';
+            netlifyIdentity.open(); // This is a trick to force repaint of the button
+            netlifyIdentity.close();
+        }
+
         renderYearView();
         if (!monthView.classList.contains('hidden')) {
             renderCalendar();
@@ -31,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.netlifyIdentity) {
         netlifyIdentity.on('init', user => updateAdminStatus(user));
-        netlifyIdentity.on('login', user => { updateAdminStatus(user); netlifyIdentity.close(); });
+        netlifyIdentity.on('login', user => { updateAdminStatus(user); });
         netlifyIdentity.on('logout', () => updateAdminStatus(null));
     }
 
@@ -80,92 +91,83 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // YENİ RENDER CALENDAR FONKSİYONU
     const renderCalendar = () => {
-        calendarGridContainer.innerHTML = ''; // Yeni ana kapsayıcıyı temizle
+        calendarGridContainer.innerHTML = '';
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
         monthYearStr.textContent = `${monthNames[month]} ${year}`;
         const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
         const projectEntries = entries[monthKey]?.filter(e => e.type === 'project') || [];
         const isProjectMonth = projectEntries.length > 0;
-        
         document.getElementById('manage-projects-btn').classList.toggle('hidden', !(isAdmin && isProjectMonth));
-
-        // Hafta günlerini grid'in başına ekle
         dayNames.forEach(name => {
             const dayNameEl = document.createElement('div');
             dayNameEl.className = 'day-name';
             dayNameEl.textContent = name;
             calendarGridContainer.appendChild(dayNameEl);
         });
-
         const firstDayOfMonth = new Date(year, month, 1);
         let dayOfWeek = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay();
         const startDate = new Date(firstDayOfMonth);
         startDate.setDate(startDate.getDate() - (dayOfWeek - 1));
-        
-        // Önceki aydan başlayan 42 günü ekle (7 isim + 35 gün = 42 eleman)
-        // Düzeltme: 42 gün kutucuğu
-        const totalCells = (42 - calendarGridContainer.childElementCount) > 35 ? 42 : 35; 
-        
-        // Önceki aydan günleri ekle
-        for(let i = 0; i < dayOfWeek - 1; i++){
-            const prevDay = new Date(startDate);
-            prevDay.setDate(startDate.getDate() + i);
-            const dayDiv = document.createElement('div');
-            dayDiv.classList.add('day', 'prev-next-month-day');
-            dayDiv.innerHTML = `<div class="day-number">${prevDay.getDate()}</div>`;
-            calendarGridContainer.appendChild(dayDiv);
-        }
-
-        // Ayın günlerini ekle
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        for (let i = 1; i <= daysInMonth; i++) {
+        const totalDaysToRender = 42;
+        for (let i = 0; i < totalDaysToRender; i++) {
+            const currentDay = new Date(startDate);
+            currentDay.setDate(startDate.getDate() + i);
             const dayDiv = document.createElement('div');
             dayDiv.classList.add('day');
-            const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-            if (isProjectMonth) { dayDiv.classList.add('project-month-day'); }
+            const dateKey = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(currentDay.getDate()).padStart(2, '0')}`;
+            if (currentDay.getMonth() !== month) {
+                dayDiv.classList.add('prev-next-month-day');
+            } else if (isProjectMonth) {
+                dayDiv.classList.add('project-month-day');
+            }
             const today = new Date();
-            if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) { dayDiv.classList.add('today'); }
-            
-            dayDiv.innerHTML = `<div class="day-number">${i}</div>`;
+            if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) {
+                dayDiv.classList.add('today');
+            }
+            dayDiv.innerHTML = `<div class="day-number">${currentDay.getDate()}</div>`;
             const dayHasEvents = entries[dateKey]?.some(e => e.type === 'event');
-
             if (dayHasEvents) {
                 const eventListDay = document.createElement('div');
                 eventListDay.classList.add('event-list-day');
                 entries[dateKey].filter(e => e.type === 'event').forEach(event => { eventListDay.innerHTML += `<div class="event-item-day">${event.title}</div>`; });
                 dayDiv.appendChild(eventListDay);
             }
-            
-            if (isAdmin && dayHasEvents) {
-                dayDiv.classList.add('clickable');
-                dayDiv.addEventListener('click', () => openDetailsModal(dateKey));
+            if (isAdmin) {
+                const addBtn = document.createElement('button');
+                addBtn.className = 'add-day-btn';
+                addBtn.textContent = '+';
+                addBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openEntryModalForDate(dateKey);
+                });
+                dayDiv.appendChild(addBtn);
+                if (dayHasEvents) {
+                    dayDiv.classList.add('clickable');
+                    dayDiv.addEventListener('click', () => openDetailsModal(dateKey));
+                }
             }
-            
             calendarGridContainer.appendChild(dayDiv);
-        }
-
-        // Sonraki aydan günleri ekle
-        let remainingCells = 49 - calendarGridContainer.childElementCount; // 7 isim + 42 gün
-        const nextMonthDay = new Date(year, month + 1, 1);
-        for(let i=0; i<remainingCells; i++){
-            const dayDiv = document.createElement('div');
-            dayDiv.classList.add('day', 'prev-next-month-day');
-            dayDiv.innerHTML = `<div class="day-number">${nextMonthDay.getDate()}</div>`;
-            calendarGridContainer.appendChild(dayDiv);
-            nextMonthDay.setDate(nextMonthDay.getDate() + 1);
         }
     };
 
-    // --- MODAL & FORM FUNCTIONS (Değişiklik yok) ---
+    // --- MODAL & FORM FUNCTIONS ---
     const setupModal = (modal) => {
         const closeBtn = modal.querySelector('.close-btn');
         closeBtn.addEventListener('click', () => modal.style.display = 'none');
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
     };
     [entryModal, manageModal, detailsModal].forEach(setupModal);
+    
+    const openEntryModalForDate = (dateKey) => {
+        entryModal.querySelector('form').reset();
+        toggleFormInputs();
+        document.getElementById('type-event').checked = true;
+        document.getElementById('event-date-input').value = dateKey;
+        toggleFormInputs(); // to show/hide correct fields
+        entryModal.style.display = 'flex';
+    };
 
     const openDetailsModal = (dateKey) => {
         const eventData = entries[dateKey]?.find(e => e.type === 'event');
@@ -182,8 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             imgContainer.classList.add('hidden');
         }
-        const manageBtn = document.getElementById('manage-event-btn');
-        manageBtn.onclick = () => {
+        document.getElementById('manage-event-btn').onclick = () => {
             detailsModal.style.display = 'none';
             openManageModal(dateKey);
         };
@@ -220,14 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const key = e.target.dataset.key;
             const indexToDelete = parseInt(e.target.dataset.index);
             const type = key.length === 7 ? 'project' : 'event';
-            let originalIndex = 0;
-            let foundIndex = -1;
+            let originalIndex = 0, foundIndex = -1;
             for(let i = 0; i < entries[key].length; i++) {
                 if(entries[key][i].type === type) {
-                    if(originalIndex === indexToDelete) {
-                        foundIndex = i;
-                        break;
-                    }
+                    if(originalIndex === indexToDelete) { foundIndex = i; break; }
                     originalIndex++;
                 }
             }
@@ -241,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    addEntryBtn.addEventListener('click', () => { entryModal.querySelector('form').reset(); toggleFormInputs(); entryModal.style.display = 'flex'; });
     const entryForm = document.getElementById('entry-form');
     const toggleFormInputs = () => {
          const isEvent = document.getElementById('type-event').checked;
@@ -249,7 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
          document.getElementById('project-inputs').classList.toggle('hidden', isEvent);
          document.getElementById('event-title-input').required = isEvent;
          document.getElementById('event-date-input').required = isEvent;
-         document.getElementById('event-image-input').required = false;
          document.getElementById('project-title-input').required = !isEvent;
          document.getElementById('project-month-input').required = !isEvent;
     };
@@ -277,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entryModal.style.display = 'none';
     });
     
-    // --- NAVIGATION ---
     document.getElementById('prev-year-btn').addEventListener('click', () => { currentYear--; renderYearView(); });
     document.getElementById('next-year-btn').addEventListener('click', () => { currentYear++; renderYearView(); });
     document.getElementById('prev-month-btn').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
@@ -286,12 +280,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('back-to-year-view-btn').addEventListener('click', showYearView);
     document.querySelectorAll('input[name="entry-type"]').forEach(radio => radio.addEventListener('change', toggleFormInputs));
     document.getElementById('manage-projects-btn').addEventListener('click', () => {
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
+        const monthKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
         openManageModal(monthKey);
     });
 
-    // --- INITIAL RENDER ---
     showYearView();
 });
