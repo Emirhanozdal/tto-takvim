@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const yearStr = document.getElementById('year-str');
     const yearViewBody = document.getElementById('year-view-body');
     const monthYearStr = document.getElementById('month-year-str');
-    const calendarBody = document.getElementById('calendar-body');
+    const calendarGridContainer = document.getElementById('calendar-grid-container'); // Değişti
     const entryModal = document.getElementById('entry-modal');
     const manageModal = document.getElementById('manage-modal');
     const detailsModal = document.getElementById('details-modal');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateAdminStatus = (user) => {
         isAdmin = !!user;
         document.body.classList.toggle('admin-mode', isAdmin);
-        renderYearView(); // Re-render to update clickable states
+        renderYearView();
         if (!monthView.classList.contains('hidden')) {
             renderCalendar();
         }
@@ -80,8 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
+    // YENİ RENDER CALENDAR FONKSİYONU
     const renderCalendar = () => {
-        calendarBody.innerHTML = '';
+        calendarGridContainer.innerHTML = ''; // Yeni ana kapsayıcıyı temizle
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
         monthYearStr.textContent = `${monthNames[month]} ${year}`;
@@ -91,21 +92,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.getElementById('manage-projects-btn').classList.toggle('hidden', !(isAdmin && isProjectMonth));
 
+        // Hafta günlerini grid'in başına ekle
+        dayNames.forEach(name => {
+            const dayNameEl = document.createElement('div');
+            dayNameEl.className = 'day-name';
+            dayNameEl.textContent = name;
+            calendarGridContainer.appendChild(dayNameEl);
+        });
+
         const firstDayOfMonth = new Date(year, month, 1);
         let dayOfWeek = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay();
         const startDate = new Date(firstDayOfMonth);
         startDate.setDate(startDate.getDate() - (dayOfWeek - 1));
         
-        for (let i = 0; i < 42; i++) {
-            const currentDay = new Date(startDate); currentDay.setDate(startDate.getDate() + i);
-            const dayDiv = document.createElement('div'); dayDiv.classList.add('day');
-            const dateKey = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(currentDay.getDate()).padStart(2, '0')}`;
-            if (currentDay.getMonth() !== month) { dayDiv.classList.add('prev-next-month-day'); }
-            if (isProjectMonth && currentDay.getMonth() === month) { dayDiv.classList.add('project-month-day'); }
+        // Önceki aydan başlayan 42 günü ekle (7 isim + 35 gün = 42 eleman)
+        // Düzeltme: 42 gün kutucuğu
+        const totalCells = (42 - calendarGridContainer.childElementCount) > 35 ? 42 : 35; 
+        
+        // Önceki aydan günleri ekle
+        for(let i = 0; i < dayOfWeek - 1; i++){
+            const prevDay = new Date(startDate);
+            prevDay.setDate(startDate.getDate() + i);
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day', 'prev-next-month-day');
+            dayDiv.innerHTML = `<div class="day-number">${prevDay.getDate()}</div>`;
+            calendarGridContainer.appendChild(dayDiv);
+        }
+
+        // Ayın günlerini ekle
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day');
+            const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+            if (isProjectMonth) { dayDiv.classList.add('project-month-day'); }
             const today = new Date();
-            if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) { dayDiv.classList.add('today'); }
+            if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) { dayDiv.classList.add('today'); }
             
-            dayDiv.innerHTML = `<div class="day-number">${currentDay.getDate()}</div>`;
+            dayDiv.innerHTML = `<div class="day-number">${i}</div>`;
             const dayHasEvents = entries[dateKey]?.some(e => e.type === 'event');
 
             if (dayHasEvents) {
@@ -120,11 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 dayDiv.addEventListener('click', () => openDetailsModal(dateKey));
             }
             
-            calendarBody.appendChild(dayDiv);
+            calendarGridContainer.appendChild(dayDiv);
+        }
+
+        // Sonraki aydan günleri ekle
+        let remainingCells = 49 - calendarGridContainer.childElementCount; // 7 isim + 42 gün
+        const nextMonthDay = new Date(year, month + 1, 1);
+        for(let i=0; i<remainingCells; i++){
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day', 'prev-next-month-day');
+            dayDiv.innerHTML = `<div class="day-number">${nextMonthDay.getDate()}</div>`;
+            calendarGridContainer.appendChild(dayDiv);
+            nextMonthDay.setDate(nextMonthDay.getDate() + 1);
         }
     };
 
-    // --- MODAL & FORM FUNCTIONS ---
+    // --- MODAL & FORM FUNCTIONS (Değişiklik yok) ---
     const setupModal = (modal) => {
         const closeBtn = modal.querySelector('.close-btn');
         closeBtn.addEventListener('click', () => modal.style.display = 'none');
@@ -135,13 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const openDetailsModal = (dateKey) => {
         const eventData = entries[dateKey]?.find(e => e.type === 'event');
         if (!eventData) return;
-
         const dateObj = new Date(dateKey + 'T00:00:00');
         const formattedDate = `${dateObj.getDate()} ${monthNames[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
-        
         document.getElementById('details-title').textContent = eventData.title;
         document.getElementById('details-date').textContent = formattedDate;
-
         const imgContainer = document.getElementById('details-image-container');
         const imgEl = document.getElementById('details-image');
         if (eventData.imageUrl) {
@@ -150,20 +182,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             imgContainer.classList.add('hidden');
         }
-
         const manageBtn = document.getElementById('manage-event-btn');
         manageBtn.onclick = () => {
             detailsModal.style.display = 'none';
             openManageModal(dateKey);
         };
-
         detailsModal.style.display = 'flex';
     };
 
     const openManageModal = (key) => {
-        const isMonthKey = key.length === 7; // YYYY-MM
+        const isMonthKey = key.length === 7;
         const type = isMonthKey ? 'project' : 'event';
-        
         document.getElementById('manage-modal-title').textContent = `${type === 'event' ? 'Etkinlikleri' : 'Projeleri'} Yönet`;
         if(!isMonthKey) {
              const dateObj = new Date(key + 'T00:00:00');
@@ -171,10 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.getElementById('manage-modal-date').textContent = '';
         }
-
         const entryList = document.getElementById('entry-list');
         entryList.innerHTML = '';
-        
         const items = entries[key]?.filter(e => e.type === type) || [];
         if (items.length === 0) {
             entryList.innerHTML = '<li>Silinecek kayıt bulunmuyor.</li>';
@@ -192,11 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.classList.contains('delete-btn')) {
             const key = e.target.dataset.key;
             const indexToDelete = parseInt(e.target.dataset.index);
-
             const type = key.length === 7 ? 'project' : 'event';
             let originalIndex = 0;
             let foundIndex = -1;
-
             for(let i = 0; i < entries[key].length; i++) {
                 if(entries[key][i].type === type) {
                     if(originalIndex === indexToDelete) {
@@ -206,12 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     originalIndex++;
                 }
             }
-            
             if (foundIndex !== -1) {
                 entries[key].splice(foundIndex, 1);
-                if (entries[key].length === 0) {
-                    delete entries[key];
-                }
+                if (entries[key].length === 0) { delete entries[key]; }
                 localStorage.setItem('tto_takvim_entries', JSON.stringify(entries));
                 renderCalendar();
                 manageModal.style.display = 'none';
@@ -223,9 +245,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const entryForm = document.getElementById('entry-form');
     const toggleFormInputs = () => {
          const isEvent = document.getElementById('type-event').checked;
-         document.getElementById('event-inputs').classList.toggle('hidden', !isEvent); document.getElementById('project-inputs').classList.toggle('hidden', isEvent);
-         document.getElementById('event-title-input').required = isEvent; document.getElementById('event-date-input').required = isEvent;
-         document.getElementById('project-title-input').required = !isEvent; document.getElementById('project-month-input').required = !isEvent;
+         document.getElementById('event-inputs').classList.toggle('hidden', !isEvent);
+         document.getElementById('project-inputs').classList.toggle('hidden', isEvent);
+         document.getElementById('event-title-input').required = isEvent;
+         document.getElementById('event-date-input').required = isEvent;
+         document.getElementById('event-image-input').required = false;
+         document.getElementById('project-title-input').required = !isEvent;
+         document.getElementById('project-month-input').required = !isEvent;
     };
     entryForm.addEventListener('submit', (e) => {
         e.preventDefault(); const type = document.querySelector('input[name="entry-type"]:checked').value;
