@@ -2,74 +2,47 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Giriş / Yönetim - TTO Takvim</title>
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <title>Yönetim Paneli - TTO Takvim</title>
+    <!-- Netlify'ın giriş sisteminin temel kütüphanesi -->
+    <script src="https://unpkg.com/netlify-auth-providers"></script>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f2f5;
-            font-family: sans-serif;
-            color: #333;
-            text-align: center;
-        }
-        .message {
-            display: none; /* JavaScript ile gösterilecek */
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: rgba(0,0,0,0.5); font-family: sans-serif; }
+        .login-box { background: white; padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .login-box h1 { margin-bottom: 20px; color: #333; }
+        .login-box button { background-color: #003B71; color: white; border: none; padding: 12px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.2s; }
+        .login-box button:hover { background-color: #00569E; }
     </style>
 </head>
 <body>
 
-    <div id="message-container" class="message">
-        <h1>İşlem Tamamlandı</h1>
-        <p>Giriş yaptınız. Ana takvim sayfasına dönebilirsiniz.</p>
-        <p>Bu pencereyi şimdi kapatabilirsiniz.</p>
+    <div class="login-box">
+        <h1>Yönetim Paneli</h1>
+        <p>İçerik eklemek veya düzenlemek için lütfen giriş yapın.</p>
+        <button id="login-btn">GitHub ile Giriş Yap</button>
     </div>
 
     <script>
         // Bu script, Netlify panelini yönetir.
-        if (window.netlifyIdentity) {
+        document.addEventListener("DOMContentLoaded", () => {
+            const authenticator = new netlify.default({site_id: "tto-takvim.netlify.app"});
             
-            // Panel açıldığında, arkaplanı karart ve mesajı gizle.
-            window.netlifyIdentity.on("open", () => {
-                document.body.style.backgroundColor = 'rgba(0,0,0,0.4)';
-                document.getElementById('message-container').style.display = 'none';
-            });
+            // Eğer kullanıcı zaten giriş yapmışsa ve bu sayfaya gelirse,
+            // ona bir mesaj göster ve pencereyi kapatabileceğini söyle.
+            if (netlify.currentUser()) {
+                document.querySelector('.login-box').innerHTML = '<h1>Giriş Yapıldı</h1><p>Bu pencereyi şimdi kapatabilirsiniz.</p>';
+            }
 
-            // Kullanıcı başarıyla GİRİŞ YAPARSA...
-            window.netlifyIdentity.on("login", (user) => {
-                // ...paneli kapat ve kullanıcıya mesaj göster.
-                window.netlifyIdentity.close();
-                document.getElementById('message-container').style.display = 'block';
-                // Artık YÖNLENDİRME YAPMIYORUZ!
+            // Giriş Yap butonuna tıklandığında...
+            document.getElementById("login-btn").addEventListener("click", () => {
+                authenticator.authenticate({provider: "github", scope: "user"}, (err, data) => {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    // Başarılı girişten sonra mesaj göster.
+                    document.querySelector('.login-box').innerHTML = '<h1>Giriş Başarılı!</h1><p>Ana takvim sayfası otomatik olarak güncellenecektir. Bu pencereyi kapatabilirsiniz.</p>';
+                });
             });
-
-            // Kullanıcı paneli "X" ile KAPATIRSA...
-            window.netlifyIdentity.on("close", () => {
-                // ...sadece "Bu pencereyi kapatabilirsiniz" mesajını göster.
-                const messageContainer = document.getElementById('message-container');
-                messageContainer.innerHTML = '<h1>Panel Kapatıldı</h1><p>Bu pencereyi şimdi kapatabilirsiniz.</p>';
-                messageContainer.style.display = 'block';
-                 // Artık YÖNLENDİRME YAPMIYORUZ!
-            });
-
-            // Sayfa ilk yüklendiğinde, giriş yapılmamışsa paneli AÇ.
-             window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.open();
-                } else {
-                    // Kullanıcı zaten giriş yapmışsa, paneli aç ve çıkış yapma seçeneği sun.
-                     window.netlifyIdentity.open();
-                }
-            });
-        }
+        });
     </script>
 
 </body>
