@@ -1,8 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
+    // --- GİZLİLİK İÇİN KONSOL TEMİZLEME ---
+    (function() { try { const interval = setInterval(() => { const start = new Date().getTime(); debugger; const end = new Date().getTime(); if (end - start > 100) { console.clear(); console.log('%cBu alan sadece geliştiriciler içindir.', 'font-size: 20px; color: red; font-weight: bold;'); } }, 1000); } catch (e) {} })();
+
+    // --- GİZLİ GİRİŞ İÇİN LOGO TIKLAMA MANTIĞI ---
+    let clickCount = 0;
+    let clickTimer = null;
+    const handleLogoClick = () => {
+        clickCount++;
+        if (clickTimer) clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 600); // 600 milisaniye içinde 3 kez tıklanmalı
+        if (clickCount === 3) {
+            clickCount = 0;
+            window.open('/inNout.html', '_blank');
+        }
+    };
+    document.getElementById('logo-trigger').addEventListener('click', handleLogoClick);
+    document.getElementById('logo-trigger-month').addEventListener('click', handleLogoClick);
+    
+    // --- GERİ KALAN TÜM KODLAR ---
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
-    const userPanel = document.getElementById('user-panel');
     const yearStr = document.getElementById('year-str');
     const yearViewBody = document.getElementById('year-view-body');
     const monthYearStr = document.getElementById('month-year-str');
@@ -11,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const manageModal = document.getElementById('manage-modal');
     const detailsModal = document.getElementById('details-modal');
 
-    // State
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
     let entries = JSON.parse(localStorage.getItem('tto_takvim_entries')) || {};
@@ -19,26 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
     let isAdmin = false;
 
-    // --- ADMIN MODE & Netlify Identity ---
-    // Bu fonksiyon, sayfa yüklendiğinde ve her 3 saniyede bir çalışarak
-    // giriş durumunu kontrol eder ve arayüzü günceller.
-    const checkAdminStatus = () => {
+    const updateAdminStatus = () => {
         const user = window.netlifyIdentity.currentUser();
         const wasAdmin = isAdmin;
         isAdmin = !!user;
 
-        // Sadece durum değiştiyse arayüzü yeniden çiz. Bu, gereksiz güncellemeleri önler.
         if (wasAdmin !== isAdmin) {
             document.body.classList.toggle('admin-mode', isAdmin);
-            if (user) {
-                userPanel.innerHTML = `<span>${user.email}</span><button id="logout-btn">Çıkış Yap</button>`;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    netlifyIdentity.logout();
-                });
-            } else {
-                userPanel.innerHTML = `<a href="/inNout.html" target="_blank">Giriş Yap</a>`;
-            }
-            // Arayüzü en güncel admin durumuna göre yeniden çiz.
             renderYearView();
             if (!monthView.classList.contains('hidden')) {
                 renderCalendar();
@@ -46,23 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Netlify script'i hazır olduğunda admin durumunu kontrol et
     if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', () => {
-             checkAdminStatus();
-             // Kullanıcı başka bir sekmede giriş/çıkış yaparsa durumu yakala
-             setInterval(checkAdminStatus, 3000); // Her 3 saniyede bir kontrol et
+             updateAdminStatus();
+             setInterval(updateAdminStatus, 2000); // Her 2 saniyede bir kontrol et
         });
-        window.netlifyIdentity.on('login', () => checkAdminStatus());
-        window.netlifyIdentity.on('logout', () => checkAdminStatus());
     }
 
-
-    // --- VIEW MANAGEMENT ---
     const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
     const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
 
-    // --- RENDER FUNCTIONS (Bu kısımlarda değişiklik yok, önceki çalışan versiyonun aynısı) ---
     const renderYearView = () => {
         yearStr.textContent = currentYear;
         yearViewBody.innerHTML = '';
@@ -111,44 +109,51 @@ document.addEventListener('DOMContentLoaded', () => {
         const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
         const isMonthlyEvent = entries[monthKey]?.some(e => e.type === 'monthly');
         const manageProjectsBtn = document.getElementById('manage-projects-btn');
-        if (manageProjectsBtn) {
-            manageProjectsBtn.classList.toggle('hidden', !(isAdmin && isMonthlyEvent));
-        }
+        if (manageProjectsBtn) manageProjectsBtn.classList.toggle('hidden', !(isAdmin && isMonthlyEvent));
+        
         dayNames.forEach(name => {
             const dayNameEl = document.createElement('div');
             dayNameEl.className = 'day-name';
             dayNameEl.textContent = name;
             calendarGridContainer.appendChild(dayNameEl);
         });
+
         const firstDayOfMonth = new Date(year, month, 1);
         let dayOfWeek = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay();
         const startDate = new Date(firstDayOfMonth);
         startDate.setDate(startDate.getDate() - (dayOfWeek - 1));
+        
         for (let i = 0; i < 42; i++) {
             const currentDay = new Date(startDate);
             currentDay.setDate(startDate.getDate() + i);
             const dayDiv = document.createElement('div');
             dayDiv.classList.add('day');
-            dayDiv.dataset.dateKey = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(currentDay.getDate()).padStart(2, '0')}`;
+            const dateKey = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(currentDay.getDate()).padStart(2, '0')}`;
+            dayDiv.dataset.dateKey = dateKey;
+
             if (currentDay.getMonth() !== month) {
                 dayDiv.classList.add('prev-next-month-day');
             } else if (isMonthlyEvent) {
                 dayDiv.classList.add('monthly-event-day');
             }
+
             const today = new Date();
             if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) {
                 dayDiv.classList.add('today');
             }
+            
             dayDiv.innerHTML = `<div class="day-number">${currentDay.getDate()}</div>`;
-            const dayHasEvents = entries[dayDiv.dataset.dateKey]?.some(e => e.type === 'daily');
+            const dayHasEvents = entries[dateKey]?.some(e => e.type === 'daily');
+
             if (dayHasEvents) {
                 const eventListDay = document.createElement('div');
                 eventListDay.classList.add('event-list-day');
-                entries[dayDiv.dataset.dateKey].filter(e => e.type === 'daily').map(event => {
+                entries[dateKey].filter(e => e.type === 'daily').map(event => {
                     eventListDay.innerHTML += `<div class="event-item-day">${event.title}</div>`;
                 });
                 dayDiv.appendChild(eventListDay);
             }
+
             if (isAdmin) {
                 if (currentDay.getMonth() === month) {
                     const addBtn = document.createElement('button');
@@ -184,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dailyEntries = entries[dateKey]?.filter(e => e.type === 'daily');
         if (!dailyEntries || dailyEntries.length === 0) return;
         const mainEntry = dailyEntries[0];
+        
         const dateObj = new Date(dateKey + 'T00:00:00');
         const formattedDate = `${dateObj.getDate()} ${monthNames[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
         document.getElementById('details-title').textContent = mainEntry.title;
@@ -192,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const descriptionDiv = document.getElementById('details-description');
         mediaContainer.innerHTML = '';
         descriptionDiv.innerHTML = '';
+        
         if (mainEntry.description) {
             if (mainEntry.description.includes('instagram.com')) {
                 mediaContainer.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${mainEntry.description}"></blockquote>`;
@@ -202,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 descriptionDiv.textContent = mainEntry.description;
             }
         }
+        
         document.getElementById('manage-day-btn').onclick = () => {
             detailsModal.style.display = 'none';
             openManageModal(dateKey);
