@@ -25,8 +25,6 @@ body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; heigh
 .header-actions button:hover { background-color: var(--light-orange); border-color: var(--pastel-orange); box-shadow: 0 0 16px 4px rgba(255, 167, 38, 0.7); }
 [data-netlify-identity-button] button { box-shadow: 0 0 8px 0px rgba(255, 167, 38, 0.6) !important; }
 [data-netlify-identity-button] button:hover { background-color: var(--light-orange) !important; border-color: var(--pastel-orange) !important; box-shadow: 0 0 16px 4px rgba(255, 167, 38, 0.7) !important; }
-
-/* YENİ ADMİN PANELİ STİLLERİ */
 #user-panel span { font-weight: 500; color: var(--primary-blue); max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #user-panel #logout-btn { background-color: var(--primary-blue); color: white; }
 
@@ -51,19 +49,7 @@ body.admin-mode .mini-calendar:hover { transform: translateY(-4px); box-shadow: 
 .event-list-day { font-size: 0.75rem; margin-top: auto; align-self: flex-start; width: 100%; }
 .event-item-day { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 3px 6px; background-color: #E7F5FF; border-left: 3px solid var(--primary-blue); border-radius: 4px; margin-top: 4px; color: var(--primary-blue); font-weight: 500; }
 .project-month-day { background-color: var(--light-orange) !important; }
-
-/* GÜNE ÖZEL EKLEME BUTONU */
-.add-day-btn {
-    position: absolute; top: 5px; right: 5px;
-    width: 24px; height: 24px;
-    background-color: var(--pastel-orange); color: white;
-    border: none; border-radius: 50%;
-    display: flex; justify-content: center; align-items: center;
-    font-size: 1.2rem; line-height: 1;
-    cursor: pointer;
-    opacity: 0; transform: scale(0.8);
-    transition: all 0.2s ease;
-}
+.add-day-btn { position: absolute; top: 5px; right: 5px; width: 24px; height: 24px; background-color: var(--pastel-orange); color: white; border: none; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; line-height: 1; cursor: pointer; opacity: 0; transform: scale(0.8); transition: all 0.2s ease; }
 .day:hover .add-day-btn { opacity: 1; transform: scale(1); }
 
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; animation: fadeIn 0.3s; }
@@ -90,8 +76,9 @@ body.admin-mode .mini-calendar:hover { transform: translateY(-4px); box-shadow: 
 #entry-list .delete-btn:hover { background-color: #c0392b; }
 #manage-modal-date { margin-bottom: 1rem; color: var(--primary-blue); font-weight: 500; }
 
-#details-image-container { width: 100%; aspect-ratio: 16 / 9; background-color: #f0f0f0; }
-#details-image { width: 100%; height: 100%; object-fit: cover; }
+#details-media-container { width: 100%; background-color: #f0f0f0; }
+#details-media-container img { width: 100%; height: auto; display: block; }
+#details-media-container .instagram-media { margin: 0 !important; min-width: unset !important; }
 #details-content { padding: 25px; }
 #details-title { font-size: 1.75rem; color: var(--primary-blue); margin-bottom: 8px; }
 #details-date { font-size: 1rem; color: var(--light-text-color); margin-bottom: 20px; }
