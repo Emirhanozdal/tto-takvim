@@ -13,43 +13,63 @@
             margin: 0;
             background-color: #f0f2f5;
             font-family: sans-serif;
-            color: #555;
-            transition: background-color 0.5s;
+            color: #333;
+            text-align: center;
         }
-        /* Panel açıldığında arkaplanı karartmak için */
-        body.modal-open {
-             background-color: rgba(0,0,0,0.4);
-        }
-        .loading-text {
-            display: none; /* Varsayılan olarak gizli */
-            font-size: 1.2rem;
+        .message {
+            display: none; /* JavaScript ile gösterilecek */
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <div class="loading-text">Yönetim paneli açılıyor...</div>
+    <div id="message-container" class="message">
+        <h1>İşlem Tamamlandı</h1>
+        <p>Giriş yaptınız. Ana takvim sayfasına dönebilirsiniz.</p>
+        <p>Bu pencereyi şimdi kapatabilirsiniz.</p>
+    </div>
 
     <script>
-        // Sayfa yüklendiğinde ve Netlify script'i hazır olduğunda
-        window.netlifyIdentity.on("init", () => {
-            // Hiçbir kontrol yapmadan, doğrudan giriş panelini aç.
-            window.netlifyIdentity.open();
-        });
+        // Bu script, Netlify panelini yönetir.
+        if (window.netlifyIdentity) {
+            
+            // Panel açıldığında, arkaplanı karart ve mesajı gizle.
+            window.netlifyIdentity.on("open", () => {
+                document.body.style.backgroundColor = 'rgba(0,0,0,0.4)';
+                document.getElementById('message-container').style.display = 'none';
+            });
 
-        // Kullanıcı başarıyla giriş yaparsa, onu ana sayfaya yönlendir.
-        window.netlifyIdentity.on("login", () => {
-            window.location.href = "/";
-        });
+            // Kullanıcı başarıyla GİRİŞ YAPARSA...
+            window.netlifyIdentity.on("login", (user) => {
+                // ...paneli kapat ve kullanıcıya mesaj göster.
+                window.netlifyIdentity.close();
+                document.getElementById('message-container').style.display = 'block';
+                // Artık YÖNLENDİRME YAPMIYORUZ!
+            });
 
-        // Kullanıcı giriş panelini kapatırsa, onu yine ana sayfaya yönlendir.
-        window.netlifyIdentity.on("close", () => {
-            // Bir anlık gecikme ekleyerek kullanıcının ne olduğunu anlamasını sağla
-            document.body.classList.add('modal-open');
-            setTimeout(() => {
-                 window.location.href = "/";
-            }, 200);
-        });
+            // Kullanıcı paneli "X" ile KAPATIRSA...
+            window.netlifyIdentity.on("close", () => {
+                // ...sadece "Bu pencereyi kapatabilirsiniz" mesajını göster.
+                const messageContainer = document.getElementById('message-container');
+                messageContainer.innerHTML = '<h1>Panel Kapatıldı</h1><p>Bu pencereyi şimdi kapatabilirsiniz.</p>';
+                messageContainer.style.display = 'block';
+                 // Artık YÖNLENDİRME YAPMIYORUZ!
+            });
+
+            // Sayfa ilk yüklendiğinde, giriş yapılmamışsa paneli AÇ.
+             window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.open();
+                } else {
+                    // Kullanıcı zaten giriş yapmışsa, paneli aç ve çıkış yapma seçeneği sun.
+                     window.netlifyIdentity.open();
+                }
+            });
+        }
     </script>
 
 </body>
