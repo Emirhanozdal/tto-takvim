@@ -7,15 +7,12 @@
             const end = new Date().getTime();
             if (end - start > 100) {
                 console.clear();
-                console.log('%cBu alan sadece geliştiriciler içindir ve yetkisiz erişim denemeleri kayıt altına alınmaktadır.', 'font-size: 20px; color: red; font-weight: bold;');
+                console.log('%cBu alan sadece geliştiriciler içindir.', 'font-size: 20px; color: red; font-weight: bold;');
             }
         };
         setInterval(checkDevTools, 1000);
-    } catch (e) {
-        // Hata durumunda hiçbir şey yapma
-    }
+    } catch (e) {}
 })();
-// --- KONSOL TEMİZLEME SONU ---
 
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
@@ -44,8 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const wasAdmin = isAdmin;
         isAdmin = !!user;
 
+        // Sadece admin durumu değiştiyse arayüzü yeniden çiz.
+        // Bu, gereksiz güncellemeleri önler.
         if (wasAdmin !== isAdmin) {
             document.body.classList.toggle('admin-mode', isAdmin);
+            
             if (user) {
                 userPanel.innerHTML = `<span>${user.email}</span><button id="logout-btn">Çıkış Yap</button>`;
                 document.getElementById('logout-btn').addEventListener('click', () => {
@@ -54,27 +54,34 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 userPanel.innerHTML = `<a href="/inNout.html" target="_blank" class="fire-shadow">Giriş Yap</a>`;
             }
+
+            // Arayüzü en güncel admin durumuna göre yeniden çiz.
             renderYearView();
             if (!monthView.classList.contains('hidden')) {
                 renderCalendar();
             }
         }
     };
-
+    
+    // Netlify script'i hazır olduğunda...
     if (window.netlifyIdentity) {
-        // Sayfa yüklendiğinde ve her 2 saniyede bir durumu kontrol et
-        window.netlifyIdentity.on('init', () => {
-            updateAdminStatus();
-            setInterval(updateAdminStatus, 2000); // Diğer sekmede yapılan değişikliği yakalamak için
+        // ...ilk durumu kontrol et.
+        netlifyIdentity.on('init', () => {
+             updateAdminStatus();
+             // Ve her 2 saniyede bir, başka bir sekmede giriş/çıkış yapılıp yapılmadığını kontrol et.
+             // BU, SORUNU ÇÖZEN EN KRİTİK KISIMDIR.
+             setInterval(updateAdminStatus, 2000); 
         });
-        // Login/Logout olayları anında arayüzü günceller
-        window.netlifyIdentity.on('login', updateAdminStatus);
-        window.netlifyIdentity.on('logout', updateAdminStatus);
+
+        // Ek olarak, bu sekmede bir olay olursa anında yakala.
+        netlifyIdentity.on('login', updateAdminStatus);
+        netlifyIdentity.on('logout', updateAdminStatus);
     }
 
-    // --- VIEW MANAGEMENT & RENDER FUNCTIONS (Değişiklik yok, önceki stabil versiyonun aynısı) ---
+    // --- GERİ KALAN TÜM KODLAR (Değişiklik yok) ---
     const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
     const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
+
     const renderYearView = () => {
         yearStr.textContent = currentYear;
         yearViewBody.innerHTML = '';
