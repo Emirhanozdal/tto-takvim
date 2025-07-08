@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Giriş / Yönetim - TTO Takvim</title>
-    <!-- Sadece Netlify'ın kendi script'ini çağırıyoruz, başka hiçbir şeye ihtiyacımız yok -->
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
-        /* Sayfanın ortalanması ve temiz görünmesi için basit stiller */
         body {
             display: flex;
             justify-content: center;
@@ -16,41 +14,42 @@
             background-color: #f0f2f5;
             font-family: sans-serif;
             color: #555;
+            transition: background-color 0.5s;
+        }
+        /* Panel açıldığında arkaplanı karartmak için */
+        body.modal-open {
+             background-color: rgba(0,0,0,0.4);
         }
         .loading-text {
+            display: none; /* Varsayılan olarak gizli */
             font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="loading-text">Yönetim paneli yükleniyor...</div>
+    <div class="loading-text">Yönetim paneli açılıyor...</div>
 
     <script>
-        // Sayfa yüklendiğinde Netlify Identity giriş panelini otomatik olarak aç
-        // Bu kod, ana script.js dosyasından tamamen bağımsız çalışır.
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                // Eğer kullanıcı zaten giriş yapmış değilse, giriş panelini aç.
-                if (!user) {
-                    window.netlifyIdentity.open();
-                } else {
-                    // Eğer kullanıcı zaten giriş yapmışsa ve bu sayfaya gelmişse,
-                    // onu doğrudan ana sayfaya geri gönder.
-                    window.location.href = "/";
-                }
-            });
+        // Sayfa yüklendiğinde ve Netlify script'i hazır olduğunda
+        window.netlifyIdentity.on("init", () => {
+            // Hiçbir kontrol yapmadan, doğrudan giriş panelini aç.
+            window.netlifyIdentity.open();
+        });
 
-            // Kullanıcı başarıyla giriş yaparsa, onu ana sayfaya yönlendir.
-            window.netlifyIdentity.on("login", () => {
-                window.location.href = "/";
-            });
+        // Kullanıcı başarıyla giriş yaparsa, onu ana sayfaya yönlendir.
+        window.netlifyIdentity.on("login", () => {
+            window.location.href = "/";
+        });
 
-            // Kullanıcı giriş panelini kapatırsa, onu yine ana sayfaya yönlendir.
-            window.netlifyIdentity.on("close", () => {
-                window.location.href = "/";
-            });
-        }
+        // Kullanıcı giriş panelini kapatırsa, onu yine ana sayfaya yönlendir.
+        window.netlifyIdentity.on("close", () => {
+            // Bir anlık gecikme ekleyerek kullanıcının ne olduğunu anlamasını sağla
+            document.body.classList.add('modal-open');
+            setTimeout(() => {
+                 window.location.href = "/";
+            }, 200);
+        });
     </script>
 
 </body>
