@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/netlify-identity-gotrue@1.0.1/dist/gotrue.js"></script>
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
     <script async src="//www.instagram.com/embed.js"></script>
 </head>
 <body>
@@ -23,7 +23,7 @@
                 <h2 id="year-str" class="header-title"></h2>
                 <button id="next-year-btn" class="nav-btn">></button>
             </div>
-            <!-- Sağ üstteki admin paneli tamamen kaldırıldı -->
+            <div id="user-panel" class="header-actions"></div>
         </header>
         <div id="year-view-body"></div>
     </div>
@@ -39,45 +39,25 @@
                  <button id="manage-projects-btn" class="hidden">Projeleri Yönet</button>
                  <button id="back-to-year-view-btn">Yıla Dön</button>
                  <button id="today-btn">Bugün</button>
-                 <!-- Çıkış butonu JavaScript ile buraya eklenecek -->
-                 <div id="logout-container"></div>
             </div>
         </header>
         <div id="calendar-grid-container"></div>
     </div>
-    <div id="entry-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">×</span>
-            <h3 class="modal-title">Yeni Kayıt Ekle</h3>
-            <form id="entry-form">
-                <div class="form-group"><label for="entry-title-input">Başlık</label><input type="text" id="entry-title-input" required></div>
-                <div class="form-group"><label for="entry-description-input">Açıklama / Link</label><input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram URL'si"></div>
-                <div class="form-group"><label>Kayıt Türü</label><div id="entry-type-selector"><input type="radio" id="type-daily" name="entry-type" value="daily" checked><label for="type-daily">Tek Günlük</label><input type="radio" id="type-monthly" name="entry-type" value="monthly"><label for="type-monthly">Aylık</label></div></div>
-                <div class="form-group" id="date-group"><label for="entry-date-input">Tarih</label><input type="date" id="entry-date-input" required></div>
-                <div class="form-group hidden" id="month-group"><label for="entry-month-input">Ay</label><input type="month" id="entry-month-input"></div>
-                <button type="submit" class="form-button fire-shadow">Kaydı Ekle</button>
-            </form>
+    <div id="entry-modal" class="modal"><div class="modal-content"><span class="close-btn">×</span><h3 class="modal-title">Yeni Kayıt Ekle</h3><form id="entry-form"><div class="form-group"><label for="entry-title-input">Başlık</label><input type="text" id="entry-title-input" required></div><div class="form-group"><label for="entry-description-input">Açıklama / Link</label><input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram URL'si"></div><div class="form-group"><label>Kayıt Türü</label><div id="entry-type-selector"><input type="radio" id="type-daily" name="entry-type" value="daily" checked><label for="type-daily">Tek Günlük</label><input type="radio" id="type-monthly" name="entry-type" value="monthly"><label for="type-monthly">Aylık</label></div></div><div class="form-group" id="date-group"><label for="entry-date-input">Tarih</label><input type="date" id="entry-date-input" required></div><div class="form-group hidden" id="month-group"><label for="entry-month-input">Ay</label><input type="month" id="entry-month-input"></div><button type="submit" class="form-button fire-shadow">Kaydı Ekle</button></form></div></div>
+    <div id="details-modal" class="modal"><div class="modal-content"><span class="close-btn">×</span><div id="details-media-container"></div><div id="details-content"><h3 id="details-title"></h3><p id="details-date"></p><div id="details-description"></div><button id="manage-day-btn" class="form-button fire-shadow">Bu Günü Yönet</button></div></div></div>
+    <div id="manage-modal" class="modal"><div class="modal-content"><span class="close-btn">×</span><h3 id="manage-modal-title" class="modal-title">Kayıtları Yönet</h3><ul id="entry-list"></ul></div></div>
+    
+    <!-- BİZİM ÖZEL GİRİŞ PANELİMİZ -->
+    <div id="custom-login-modal" class="modal">
+        <div class="login-container">
+            <span class="close-btn" id="custom-login-close">×</span>
+            <img src="logo.png" alt="TTO Logo" class="logo">
+            <h1>Yönetim Paneli</h1>
+            <p>İçerik yönetimi için lütfen giriş yapın.</p>
+            <div data-netlify-identity-button></div>
         </div>
     </div>
-    <div id="details-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">×</span>
-            <div id="details-media-container"></div>
-            <div id="details-content">
-                <h3 id="details-title"></h3>
-                <p id="details-date"></p>
-                <div id="details-description"></div>
-                <button id="manage-day-btn" class="form-button fire-shadow">Bu Günü Yönet</button>
-            </div>
-        </div>
-    </div>
-    <div id="manage-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">×</span>
-            <h3 id="manage-modal-title" class="modal-title">Kayıtları Yönet</h3>
-            <ul id="entry-list"></ul>
-        </div>
-    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
