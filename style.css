@@ -79,7 +79,7 @@ body.admin-mode .mini-calendar:hover { transform: translateY(-4px); box-shadow: 
 #details-content { padding: 25px; }
 #details-title { font-size: 1.75rem; color: var(--primary-blue); margin-bottom: 8px; }
 #details-date { font-size: 1rem; color: var(--light-text-color); margin-bottom: 20px; }
-#details-description { margin-top: -10px; margin-bottom: 20px; font-style: italic; color: var(--light-text-color); }
+#details-description { margin-top: -10px; margin-bottom: 20px; font-style: italic; color: var(--light-text-color); word-break: break-word; }
 #manage-day-btn { background-color: var(--primary-blue); }
 
 @media (max-width: 768px) {
