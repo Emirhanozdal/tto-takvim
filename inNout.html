@@ -16,30 +16,30 @@
     </div>
     <script>
         if (window.netlifyIdentity) {
-            const handleAuth = (user) => {
-                const messageBox = document.getElementById('message-box');
-                if (user) {
-                    messageBox.querySelector('h1').textContent = 'Giriş Başarılı!';
-                } else {
-                    messageBox.querySelector('h1').textContent = 'Çıkış Yapıldı';
-                }
-                messageBox.style.display = 'block';
-                window.netlifyIdentity.close();
-            };
+            // Netlify script'i hazır olduğunda, HİÇBİR KONTROL YAPMADAN
+            // doğrudan giriş/çıkış panelini aç.
+            // Bu, "zaten giriş yapılmış" durumunu görmezden gelmesini sağlar.
+            window.netlifyIdentity.on('init', () => {
+                window.netlifyIdentity.open(); 
+            });
 
-            window.netlifyIdentity.on('login', handleAuth);
-            window.netlifyIdentity.on('logout', () => handleAuth(null));
-            
-            // Panel X ile kapatılırsa, hiçbir şey yapma, sadece pencereyi kapat.
+            // Kullanıcı başarıyla giriş yaparsa veya çıkış yaparsa
+            window.netlifyIdentity.on('login', (user) => {
+                window.netlifyIdentity.close();
+                document.getElementById('message-box').style.display = 'block';
+            });
+             window.netlifyIdentity.on('logout', () => {
+                document.getElementById('message-box').querySelector('h1').textContent = 'Çıkış Başarılı!';
+                document.getElementById('message-box').style.display = 'block';
+                 setTimeout(() => window.close(), 1500); // 1.5 saniye sonra pencereyi kapatmayı dene
+            });
+
+            // Kullanıcı paneli "X" ile kapatırsa...
             window.netlifyIdentity.on('close', () => {
+                // ... ve hala giriş yapmamışsa, pencereyi kapat.
                 if (!window.netlifyIdentity.currentUser()) {
                     window.close();
                 }
-            });
-
-            // Sayfa yüklendiğinde, her zaman paneli aç.
-            window.netlifyIdentity.on('init', () => {
-                window.netlifyIdentity.open();
             });
         }
     </script>
