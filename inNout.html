@@ -38,10 +38,9 @@
             const loginForm = document.getElementById('custom-login-form');
             const messageEl = document.getElementById('login-message');
 
-            // Eğer kullanıcı zaten giriş yapmışsa, bir mesaj göster
             if (auth.currentUser()) {
                 loginForm.style.display = 'none';
-                messageEl.textContent = 'Zaten giriş yapılmış. Bu pencereyi kapatabilirsiniz.';
+                messageEl.innerHTML = `Zaten <b>${auth.currentUser().email}</b> olarak giriş yapılmış.<br>Bu pencereyi kapatabilirsiniz.`;
             }
 
             loginForm.addEventListener('submit', (e) => {
@@ -50,17 +49,18 @@
                 const password = document.getElementById('login-password').value;
                 
                 messageEl.textContent = "Giriş yapılıyor...";
+                messageEl.style.color = '#6C757D';
 
                 auth.login(email, password, true)
                     .then(user => {
                         loginForm.style.display = 'none';
-                        messageEl.textContent = `Giriş başarılı! Hoş geldiniz, ${user.email}. Bu pencereyi kapatabilirsiniz.`;
-                        // Ana sayfanın güncellenmesi için bir sonraki adıma bakın
+                        messageEl.textContent = `Giriş başarılı! Bu pencereyi kapatabilirsiniz.`;
+                        messageEl.style.color = '#003B71';
                     })
                     .catch(error => {
                         console.error(error);
-                        messageEl.textContent = "Hatalı e-posta veya şifre. Lütfen tekrar deneyin.";
-                        messageEl.style.color = 'red';
+                        messageEl.textContent = "Hatalı e-posta veya şifre.";
+                        messageEl.style.color = '#d63031';
                     });
             });
         });
