@@ -1,1 +1,328 @@
-const _0x519a2a=_0x5dcd;function _0x5dcd(_0x4910f9,_0x580ad1){const _0x5517a0=_0x5517();return _0x5dcd=function(_0x5dcdf0,_0x3b84cc){_0x5dcdf0=_0x5dcdf0-0x8e;let _0xf5c398=_0x5517a0[_0x5dcdf0];return _0xf5c398;},_0x5dcd(_0x4910f9,_0x580ad1);}(function(_0xa6931,_0x399133){const _0x2a8cbf=_0x5dcd,_0x440278=_0xa6931();while(!![]){try{const _0x1c05de=parseInt(_0x2a8cbf(0xd8))/0x1*(parseInt(_0x2a8cbf(0x8e))/0x2)+-parseInt(_0x2a8cbf(0xd9))/0x3+parseInt(_0x2a8cbf(0xe8))/0x4*(-parseInt(_0x2a8cbf(0xa3))/0x5)+-parseInt(_0x2a8cbf(0xcf))/0x6+parseInt(_0x2a8cbf(0xa8))/0x7+-parseInt(_0x2a8cbf(0x11f))/0x8+parseInt(_0x2a8cbf(0xa2))/0x9*(parseInt(_0x2a8cbf(0xff))/0xa);if(_0x1c05de===_0x399133)break;else _0x440278['push'](_0x440278['shift']());}catch(_0x223b8c){_0x440278['push'](_0x440278['shift']());}}}(_0x5517,0xe3d3e),document['addEventListener'](_0x519a2a(0xf3),()=>{const _0x380d02=_0x519a2a,_0x3bb68a=document[_0x380d02(0x116)](_0x380d02(0xca)),_0x3210bc=document[_0x380d02(0x116)](_0x380d02(0x96)),_0x21ce97=document[_0x380d02(0x116)](_0x380d02(0x110)),_0x5f4f3b=document[_0x380d02(0x116)](_0x380d02(0x10d)),_0x412d68=document[_0x380d02(0x116)](_0x380d02(0xbc)),_0x3090c4=document[_0x380d02(0x116)](_0x380d02(0xc5)),_0x13175d=document[_0x380d02(0x116)](_0x380d02(0x103)),_0x4691d4=document['getElementById']('entry-modal'),_0x48feaa=document[_0x380d02(0x116)]('manage-modal'),_0x388e96=document[_0x380d02(0x116)](_0x380d02(0xae));let _0x3f1227=new Date(),_0x4b3c22=_0x3f1227[_0x380d02(0xec)](),_0x5ace74=JSON['parse'](localStorage['getItem']('tto_takvim_entries'))||{};const _0x2d44ea=[_0x380d02(0xb2),_0x380d02(0xc4),'Mart','Nisan',_0x380d02(0xfc),_0x380d02(0xee),_0x380d02(0x97),_0x380d02(0xfa),_0x380d02(0xe1),'Ekim',_0x380d02(0x106),_0x380d02(0xb8)],_0xd4bda6=[_0x380d02(0xb6),'Sal','Çar',_0x380d02(0x104),_0x380d02(0x102),_0x380d02(0xce),_0x380d02(0x115)];let _0x3fcc7d=![];const _0x370a6e=_0x817b74=>{const _0x4df0ad=_0x380d02;_0x3fcc7d=!!_0x817b74,document['body']['classList'][_0x4df0ad(0xbe)](_0x4df0ad(0x9e),_0x3fcc7d),_0x817b74?(_0x21ce97['innerHTML']=_0x4df0ad(0xe9)+_0x817b74[_0x4df0ad(0xfb)]+_0x4df0ad(0x119),document[_0x4df0ad(0x116)](_0x4df0ad(0xbd))[_0x4df0ad(0xdb)](_0x4df0ad(0xcd),()=>netlifyIdentity[_0x4df0ad(0xf7)]())):_0x21ce97[_0x4df0ad(0xda)]=_0x4df0ad(0xac),_0x3c0f5a(),!_0x3210bc[_0x4df0ad(0xc6)]['contains'](_0x4df0ad(0xe5))&&_0x258434();};window['netlifyIdentity']&&(netlifyIdentity['on'](_0x380d02(0xfd),_0x429632=>_0x370a6e(_0x429632)),netlifyIdentity['on'](_0x380d02(0xa5),_0x21be28=>{_0x370a6e(_0x21be28);}),netlifyIdentity['on'](_0x380d02(0xf7),()=>_0x370a6e(null)));const _0x4b9ebe=()=>{const _0x1e5187=_0x380d02;_0x3bb68a['classList'][_0x1e5187(0xb5)]('hidden'),_0x3210bc[_0x1e5187(0xc6)][_0x1e5187(0xd6)]('hidden'),_0x3c0f5a();},_0x38c1f9=()=>{const _0xb65ba8=_0x380d02;_0x3bb68a[_0xb65ba8(0xc6)][_0xb65ba8(0xd6)](_0xb65ba8(0xe5)),_0x3210bc[_0xb65ba8(0xc6)][_0xb65ba8(0xb5)]('hidden'),_0x258434();},_0x3c0f5a=()=>{const _0x46bb49=_0x380d02;_0x5f4f3b[_0x46bb49(0xb3)]=_0x4b3c22,_0x412d68[_0x46bb49(0xda)]='';for(let _0x1015e7=0x0;_0x1015e7<0xc;_0x1015e7++){const _0x4baf09=document[_0x46bb49(0x99)](_0x46bb49(0xd3));_0x4baf09[_0x46bb49(0x11e)]=_0x46bb49(0x9c),_0x4baf09[_0x46bb49(0xdb)](_0x46bb49(0xcd),()=>{_0x3f1227=new Date(_0x4b3c22,_0x1015e7,0x1),_0x38c1f9();});const _0x17e967=document[_0x46bb49(0x99)](_0x46bb49(0xd3));_0x17e967['className']=_0x46bb49(0x113),_0x17e967[_0x46bb49(0xb3)]=_0x2d44ea[_0x1015e7];const _0x3f3633=document[_0x46bb49(0x99)](_0x46bb49(0xd3));_0x3f3633[_0x46bb49(0x11e)]=_0x46bb49(0xf4),_0xd4bda6[_0x46bb49(0xc0)](_0x5068a1=>_0x3f3633[_0x46bb49(0xda)]+='<div>'+_0x5068a1+_0x46bb49(0xb0));const _0x2b2ddf=document['createElement'](_0x46bb49(0xd3));_0x2b2ddf[_0x46bb49(0x11e)]=_0x46bb49(0x8f);const _0x19549c=new Date(_0x4b3c22,_0x1015e7,0x1),_0x2e5998=new Date(_0x4b3c22,_0x1015e7+0x1,0x0)['getDate']();let _0x48d030=_0x19549c['getDay']()===0x0?0x6:_0x19549c[_0x46bb49(0xaf)]()-0x1;for(let _0x11a103=0x0;_0x11a103<_0x48d030;_0x11a103++){_0x2b2ddf[_0x46bb49(0xda)]+=_0x46bb49(0xc7);}for(let _0x1bfca6=0x1;_0x1bfca6<=_0x2e5998;_0x1bfca6++){const _0x4fda97=document[_0x46bb49(0x99)](_0x46bb49(0xd3));_0x4fda97[_0x46bb49(0x11e)]='mini-day',_0x4fda97['textContent']=_0x1bfca6;const _0x27cd41=_0x4b3c22+'-'+String(_0x1015e7+0x1)[_0x46bb49(0x10e)](0x2,'0')+'-'+String(_0x1bfca6)[_0x46bb49(0x10e)](0x2,'0');if(_0x5ace74[_0x27cd41])_0x4fda97[_0x46bb49(0xc6)][_0x46bb49(0xd6)]('has-event');const _0x1247e6=_0x4b3c22+'-'+String(_0x1015e7+0x1)[_0x46bb49(0x10e)](0x2,'0');_0x5ace74[_0x1247e6]&&_0x5ace74[_0x1247e6][_0x46bb49(0xdf)](_0x37a8d5=>_0x37a8d5[_0x46bb49(0xd4)]===_0x46bb49(0x91))&&_0x4fda97[_0x46bb49(0xc6)]['add']('is-monthly');const _0x9ba29e=new Date();_0x1bfca6===_0x9ba29e[_0x46bb49(0xd5)]()&&_0x1015e7===_0x9ba29e[_0x46bb49(0x9f)]()&&_0x4b3c22===_0x9ba29e[_0x46bb49(0xec)]()&&_0x4fda97['classList'][_0x46bb49(0xd6)]('is-today'),_0x2b2ddf[_0x46bb49(0xd0)](_0x4fda97);}_0x4baf09[_0x46bb49(0x120)](_0x17e967,_0x3f3633,_0x2b2ddf),_0x412d68['appendChild'](_0x4baf09);}},_0x258434=()=>{const _0x2a281a=_0x380d02;_0x13175d[_0x2a281a(0xda)]='';const _0x6c361f=_0x3f1227[_0x2a281a(0xec)](),_0xf3d9d6=_0x3f1227[_0x2a281a(0x9f)]();_0x3090c4[_0x2a281a(0xb3)]=_0x2d44ea[_0xf3d9d6]+'\x20'+_0x6c361f;const _0x1e47a3=_0x6c361f+'-'+String(_0xf3d9d6+0x1)[_0x2a281a(0x10e)](0x2,'0'),_0x4af278=_0x5ace74[_0x1e47a3]?.[_0x2a281a(0xdf)](_0x257e49=>_0x257e49[_0x2a281a(0xd4)]===_0x2a281a(0x91));_0xd4bda6['forEach'](_0x292001=>{const _0x291c12=_0x2a281a,_0x4d38e3=document[_0x291c12(0x99)](_0x291c12(0xd3));_0x4d38e3[_0x291c12(0x11e)]=_0x291c12(0xc3),_0x4d38e3['textContent']=_0x292001,_0x13175d[_0x291c12(0xd0)](_0x4d38e3);});const _0x1006f4=new Date(_0x6c361f,_0xf3d9d6,0x1);let _0x26239f=_0x1006f4['getDay']()===0x0?0x7:_0x1006f4[_0x2a281a(0xaf)]();const _0x400ca8=new Date(_0x1006f4);_0x400ca8[_0x2a281a(0xe2)](_0x400ca8[_0x2a281a(0xd5)]()-(_0x26239f-0x1));for(let _0x4e7ef9=0x0;_0x4e7ef9<0x2a;_0x4e7ef9++){const _0x118048=new Date(_0x400ca8);_0x118048[_0x2a281a(0xe2)](_0x400ca8[_0x2a281a(0xd5)]()+_0x4e7ef9);const _0xeee23a=document[_0x2a281a(0x99)](_0x2a281a(0xd3));_0xeee23a[_0x2a281a(0xc6)][_0x2a281a(0xd6)](_0x2a281a(0xcb));const _0x538c8c=_0x118048[_0x2a281a(0xec)]()+'-'+String(_0x118048[_0x2a281a(0x9f)]()+0x1)[_0x2a281a(0x10e)](0x2,'0')+'-'+String(_0x118048[_0x2a281a(0xd5)]())[_0x2a281a(0x10e)](0x2,'0');if(_0x118048[_0x2a281a(0x9f)]()!==_0xf3d9d6)_0xeee23a[_0x2a281a(0xc6)][_0x2a281a(0xd6)](_0x2a281a(0x11a));else _0x4af278&&_0xeee23a[_0x2a281a(0xc6)][_0x2a281a(0xd6)](_0x2a281a(0xcc));const _0x24b6de=new Date();_0x118048[_0x2a281a(0xd5)]()===_0x24b6de[_0x2a281a(0xd5)]()&&_0x118048['getMonth']()===_0x24b6de['getMonth']()&&_0x118048[_0x2a281a(0xec)]()===_0x24b6de[_0x2a281a(0xec)]()&&_0xeee23a[_0x2a281a(0xc6)]['add'](_0x2a281a(0xa0));_0xeee23a[_0x2a281a(0xda)]=_0x2a281a(0xc1)+_0x118048['getDate']()+_0x2a281a(0xb0);const _0x3ef927=_0x5ace74[_0x538c8c]?.[_0x2a281a(0xdf)](_0x49e286=>_0x49e286[_0x2a281a(0xd4)]===_0x2a281a(0xf6));if(_0x3ef927){const _0x5f4977=document[_0x2a281a(0x99)](_0x2a281a(0xd3));_0x5f4977['classList'][_0x2a281a(0xd6)]('event-list-day'),_0x5ace74[_0x538c8c]['filter'](_0x737f6f=>_0x737f6f['type']==='daily')[_0x2a281a(0xc9)](_0x592772=>{const _0x15042e=_0x2a281a;_0x5f4977[_0x15042e(0xda)]+=_0x15042e(0x94)+_0x592772[_0x15042e(0xf8)]+_0x15042e(0xb0);}),_0xeee23a[_0x2a281a(0xd0)](_0x5f4977);}if(_0x3fcc7d){if(_0x118048[_0x2a281a(0x9f)]()===_0xf3d9d6){const _0x2e2daf=document[_0x2a281a(0x99)]('button');_0x2e2daf['className']=_0x2a281a(0x10c),_0x2e2daf[_0x2a281a(0xb3)]='+',_0x2e2daf[_0x2a281a(0xed)]=_0x148cd6=>{const _0x223939=_0x2a281a;_0x148cd6[_0x223939(0x11d)](),_0x2c06de(_0x538c8c);},_0xeee23a[_0x2a281a(0xd0)](_0x2e2daf);}_0x3ef927&&(_0xeee23a['classList'][_0x2a281a(0xd6)](_0x2a281a(0xe3)),_0xeee23a['onclick']=()=>_0x2a7a64(_0x538c8c));}_0x13175d[_0x2a281a(0xd0)](_0xeee23a);}},_0x100425=_0x571b41=>{const _0x3e2c85=_0x380d02,_0x9ab413=_0x571b41[_0x3e2c85(0xf5)](_0x3e2c85(0x11b));_0x9ab413[_0x3e2c85(0xdb)](_0x3e2c85(0xcd),()=>_0x571b41[_0x3e2c85(0x93)][_0x3e2c85(0xaa)]='none'),_0x571b41['addEventListener']('click',_0x147fab=>{const _0xdb0c4a=_0x3e2c85;if(_0x147fab[_0xdb0c4a(0xa6)]===_0x571b41)_0x571b41['style'][_0xdb0c4a(0xaa)]='none';});};[_0x4691d4,_0x388e96,_0x48feaa]['forEach'](_0x100425);const _0x2c06de=_0x19ec07=>{const _0x2a77fd=_0x380d02;_0x4691d4[_0x2a77fd(0xf5)](_0x2a77fd(0xbb))['reset'](),document['getElementById'](_0x2a77fd(0xf9))[_0x2a77fd(0xd1)]=_0x19ec07,document[_0x2a77fd(0x116)](_0x2a77fd(0x108))[_0x2a77fd(0x107)]=!![],_0x16595c(),_0x4691d4['style']['display']=_0x2a77fd(0x9b);},_0x2a7a64=_0x387f98=>{const _0x36500c=_0x380d02,_0x41be33=_0x5ace74[_0x387f98]?.[_0x36500c(0xe6)](_0x2c75f8=>_0x2c75f8[_0x36500c(0xd4)]===_0x36500c(0xf6));if(!_0x41be33||_0x41be33[_0x36500c(0xe4)]===0x0)return;const _0x13333c=_0x41be33[0x0],_0x47b4ac=new Date(_0x387f98+_0x36500c(0xb9)),_0x34d456=_0x47b4ac[_0x36500c(0xd5)]()+'\x20'+_0x2d44ea[_0x47b4ac[_0x36500c(0x9f)]()]+'\x20'+_0x47b4ac['getFullYear']();document[_0x36500c(0x116)](_0x36500c(0x105))[_0x36500c(0xb3)]=_0x13333c['title'],document[_0x36500c(0x116)](_0x36500c(0xe0))[_0x36500c(0xb3)]=_0x34d456;const _0x55402d=document[_0x36500c(0x116)](_0x36500c(0x101)),_0x10e786=document[_0x36500c(0x116)](_0x36500c(0x109));_0x55402d[_0x36500c(0xda)]='',_0x10e786[_0x36500c(0xda)]='';if(_0x13333c[_0x36500c(0xc8)]){if(_0x13333c[_0x36500c(0xc8)][_0x36500c(0xc2)](_0x36500c(0x117))){_0x55402d[_0x36500c(0xda)]=_0x36500c(0x92)+_0x13333c[_0x36500c(0xc8)]+_0x36500c(0xdc);if(window[_0x36500c(0xa9)])window[_0x36500c(0xa9)]['Embeds']['process']();}else _0x13333c[_0x36500c(0xc8)][_0x36500c(0xf2)](/\.(jpeg|jpg|gif|png|webp)$/i)?_0x55402d['innerHTML']=_0x36500c(0xfe)+_0x13333c[_0x36500c(0xc8)]+'\x22\x20alt=\x22Etkinlik\x20Görseli\x22>':_0x10e786[_0x36500c(0xb3)]=_0x13333c['description'];}document['getElementById'](_0x36500c(0xa4))['onclick']=()=>{const _0x3717a0=_0x36500c;_0x388e96[_0x3717a0(0x93)]['display']=_0x3717a0(0x10a),_0x20a368(_0x387f98);},_0x388e96['style'][_0x36500c(0xaa)]=_0x36500c(0x9b);},_0x20a368=_0x328bf6=>{const _0x5f03f0=_0x380d02,_0xa22a95=_0x328bf6['length']===0x7,_0x4e5c9f=_0xa22a95?_0x5f03f0(0x91):_0x5f03f0(0xf6);document[_0x5f03f0(0x116)](_0x5f03f0(0x114))[_0x5f03f0(0xb3)]=_0x5f03f0(0xdd);const _0x101bd5=document[_0x5f03f0(0x116)](_0x5f03f0(0xb7));_0x101bd5[_0x5f03f0(0xda)]='';const _0x27869e=_0x5ace74[_0x328bf6]?.['filter'](_0x5e5fa3=>_0x5e5fa3['type']===_0x4e5c9f)||[];_0x27869e[_0x5f03f0(0xe4)]===0x0?_0x101bd5[_0x5f03f0(0xda)]=_0x5f03f0(0xea):_0x27869e[_0x5f03f0(0xc0)]((_0x2a7bfb,_0x521aca)=>{const _0x32f098=_0x5f03f0,_0x5b7530=document['createElement']('li');_0x5b7530[_0x32f098(0xda)]=_0x32f098(0xe9)+_0x2a7bfb['title']+_0x32f098(0xa7)+_0x328bf6+_0x32f098(0xbf)+_0x4e5c9f+'\x22\x20data-title=\x22'+_0x2a7bfb['title']+_0x32f098(0x111),_0x101bd5[_0x32f098(0xd0)](_0x5b7530);}),_0x48feaa['style'][_0x5f03f0(0xaa)]=_0x5f03f0(0x9b);};document[_0x380d02(0x116)](_0x380d02(0xb7))[_0x380d02(0xdb)](_0x380d02(0xcd),_0x302e03=>{const _0xdd6df9=_0x380d02;if(_0x302e03[_0xdd6df9(0xa6)][_0xdd6df9(0xc6)][_0xdd6df9(0xef)](_0xdd6df9(0xa1))){const _0x53f68e=_0x302e03[_0xdd6df9(0xa6)]['dataset'][_0xdd6df9(0x90)],_0x18ddf6=_0x302e03[_0xdd6df9(0xa6)]['dataset']['type'],_0x469958=_0x302e03['target'][_0xdd6df9(0x95)]['title'];_0x5ace74[_0x53f68e]&&(_0x5ace74[_0x53f68e]=_0x5ace74[_0x53f68e][_0xdd6df9(0xe6)](_0x15a25b=>!(_0x15a25b[_0xdd6df9(0xd4)]===_0x18ddf6&&_0x15a25b['title']===_0x469958)),_0x5ace74[_0x53f68e]['length']===0x0&&delete _0x5ace74[_0x53f68e],localStorage[_0xdd6df9(0x9d)](_0xdd6df9(0xd2),JSON[_0xdd6df9(0xf1)](_0x5ace74)),_0x3210bc[_0xdd6df9(0xc6)][_0xdd6df9(0xef)](_0xdd6df9(0xe5))?_0x3c0f5a():_0x258434(),_0x48feaa['style']['display']=_0xdd6df9(0x10a));}});const _0x1b39c2=document['getElementById']('entry-form'),_0x16595c=()=>{const _0x4a0294=_0x380d02,_0x46b89f=document[_0x4a0294(0x116)](_0x4a0294(0x108))[_0x4a0294(0x107)];document[_0x4a0294(0x116)]('date-group')['classList'][_0x4a0294(0xbe)](_0x4a0294(0xe5),!_0x46b89f),document[_0x4a0294(0x116)]('month-group')['classList'][_0x4a0294(0xbe)]('hidden',_0x46b89f),document[_0x4a0294(0x116)]('entry-date-input')['required']=_0x46b89f,document[_0x4a0294(0x116)]('entry-month-input')[_0x4a0294(0x100)]=!_0x46b89f;};_0x1b39c2[_0x380d02(0xdb)](_0x380d02(0xab),_0x19bd22=>{const _0xef6905=_0x380d02;_0x19bd22['preventDefault']();const _0x3f14b9=document['querySelector']('input[name=\x22entry-type\x22]:checked')[_0xef6905(0xd1)],_0xb42cc2=document[_0xef6905(0x116)](_0xef6905(0xd7))[_0xef6905(0xd1)][_0xef6905(0x10b)](),_0x9a36cd=document['getElementById'](_0xef6905(0x10f))[_0xef6905(0xd1)][_0xef6905(0x10b)]();let _0x33cd0d,_0x37a97b;if(_0x3f14b9==='daily'){const _0x216be4=document[_0xef6905(0x116)]('entry-date-input')[_0xef6905(0xd1)];if(!_0xb42cc2||!_0x216be4)return;_0x33cd0d=_0x216be4,_0x37a97b={'type':_0xef6905(0xf6),'title':_0xb42cc2,'description':_0x9a36cd};}else{const _0x10896e=document['getElementById'](_0xef6905(0x11c))['value'];if(!_0xb42cc2||!_0x10896e)return;_0x33cd0d=_0x10896e,_0x37a97b={'type':_0xef6905(0x91),'title':_0xb42cc2,'description':_0x9a36cd};}if(!_0x5ace74[_0x33cd0d])_0x5ace74[_0x33cd0d]=[];_0x5ace74[_0x33cd0d]['push'](_0x37a97b),localStorage[_0xef6905(0x9d)](_0xef6905(0xd2),JSON['stringify'](_0x5ace74)),_0x3210bc['classList'][_0xef6905(0xef)](_0xef6905(0xe5))?_0x3c0f5a():_0x258434(),_0x4691d4[_0xef6905(0x93)][_0xef6905(0xaa)]=_0xef6905(0x10a);}),document['getElementById'](_0x380d02(0xba))[_0x380d02(0xdb)]('click',()=>{_0x4b3c22--,_0x3c0f5a();}),document[_0x380d02(0x116)](_0x380d02(0xf0))[_0x380d02(0xdb)](_0x380d02(0xcd),()=>{_0x4b3c22++,_0x3c0f5a();}),document[_0x380d02(0x116)]('prev-month-btn')[_0x380d02(0xdb)](_0x380d02(0xcd),()=>{const _0x4cce5a=_0x380d02;_0x3f1227['setMonth'](_0x3f1227[_0x4cce5a(0x9f)]()-0x1),_0x258434();}),document[_0x380d02(0x116)]('next-month-btn')[_0x380d02(0xdb)](_0x380d02(0xcd),()=>{const _0x648da=_0x380d02;_0x3f1227[_0x648da(0x9a)](_0x3f1227[_0x648da(0x9f)]()+0x1),_0x258434();}),document[_0x380d02(0x116)](_0x380d02(0xeb))[_0x380d02(0xdb)](_0x380d02(0xcd),()=>{_0x3f1227=new Date(),_0x38c1f9();}),document[_0x380d02(0x116)]('back-to-year-view-btn')[_0x380d02(0xdb)](_0x380d02(0xcd),_0x4b9ebe),document[_0x380d02(0xb4)](_0x380d02(0x112))[_0x380d02(0xc0)](_0x3110ba=>_0x3110ba[_0x380d02(0xdb)](_0x380d02(0xe7),_0x16595c)),_0x13175d[_0x380d02(0xdb)](_0x380d02(0xcd),_0x18a577=>{const _0x311d20=_0x380d02,_0x17219f=_0x18a577[_0x311d20(0xa6)][_0x311d20(0x118)](_0x311d20(0xad));_0x17219f&&_0x2c06de(_0x17219f[_0x311d20(0x98)][_0x311d20(0x95)][_0x311d20(0xb1)]);}),_0x13175d['addEventListener'](_0x380d02(0xcd),_0x2143b8=>{const _0x30b256=_0x380d02;_0x2143b8[_0x30b256(0xa6)]&&_0x2143b8[_0x30b256(0xa6)][_0x30b256(0xde)](_0x30b256(0xad))&&(_0x2143b8['stopPropagation'](),_0x2c06de(_0x2143b8[_0x30b256(0xa6)][_0x30b256(0x98)]['dataset'][_0x30b256(0xb1)]));}),_0x4b9ebe();}));function _0x5517(){const _0x2eb4b8=['.add-day-btn','details-modal','getDay','</div>','dateKey','Ocak','textContent','querySelectorAll','remove','Pzt','entry-list','Aralık','T00:00:00','prev-year-btn','form','year-view-body','logout-btn','toggle','\x22\x20data-type=\x22','forEach','<div\x20class=\x22day-number\x22>','includes','day-name','Şubat','month-year-str','classList','<div\x20class=\x22mini-day\x22></div>','description','map','year-view','day','monthly-event-day','click','Cmt','5371032dFZpUM','appendChild','value','tto_takvim_entries','div','type','getDate','add','entry-title-input','84282RsHvwM','3764328OSfWcM','innerHTML','addEventListener','\x22></blockquote>','Kayıtları\x20Yönet','matches','some','details-date','Eylül','setDate','clickable','length','hidden','filter','change','8vHQMHh','<span>','<li>Bu\x20seçime\x20ait\x20silinecek\x20kayıt\x20bulunmuyor.</li>','today-btn','getFullYear','onclick','Haziran','contains','next-year-btn','stringify','match','DOMContentLoaded','mini-day-names','querySelector','daily','logout','title','entry-date-input','Ağustos','email','Mayıs','init','<img\x20src=\x22','240FYhyVr','required','details-media-container','Cum','calendar-grid-container','Per','details-title','Kasım','checked','type-daily','details-description','none','trim','add-day-btn','year-str','padStart','entry-description-input','user-panel','\x22>Sil</button>','input[name=\x22entry-type\x22]','mini-calendar-header','manage-modal-title','Paz','getElementById','instagram.com','closest','</span><button\x20id=\x22logout-btn\x22>Çıkış\x20Yap</button>','prev-next-month-day','.close-btn','entry-month-input','stopPropagation','className','12264512oaeCwS','append','22RqUUrH','mini-day-grid','key','monthly','<blockquote\x20class=\x22instagram-media\x22\x20data-instgrm-permalink=\x22','style','<div\x20class=\x22event-item-day\x22>','dataset','month-view','Temmuz','parentElement','createElement','setMonth','flex','mini-calendar','setItem','admin-mode','getMonth','today','delete-btn','1338840BsZgtJ','1408315zxgrIW','manage-day-btn','login','target','</span><button\x20class=\x22delete-btn\x22\x20data-key=\x22','4775246ZstwMK','instgrm','display','submit','<a\x20href=\x22/inNout.html\x22>Giriş\x20Yap</a>'];_0x5517=function(){return _0x2eb4b8;};return _0x5517();}
+// --- KONSOL TEMİZLEME VE GİZLEME ---
+(function() {
+    try {
+        const interval = setInterval(() => {
+            const start = new Date().getTime();
+            debugger;
+            const end = new Date().getTime();
+            if (end - start > 100) {
+                console.clear();
+                console.log('%cBu alan sadece geliştiriciler içindir.', 'font-size: 20px; color: red; font-weight: bold;');
+            }
+        }, 1000);
+    } catch (e) {}
+})();
+// --- KONSOL TEMİZLEME SONU ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements
+    const yearView = document.getElementById('year-view');
+    const monthView = document.getElementById('month-view');
+    const userPanel = document.getElementById('user-panel');
+    const yearStr = document.getElementById('year-str');
+    const yearViewBody = document.getElementById('year-view-body');
+    const monthYearStr = document.getElementById('month-year-str');
+    const calendarGridContainer = document.getElementById('calendar-grid-container');
+    const entryModal = document.getElementById('entry-modal');
+    const manageModal = document.getElementById('manage-modal');
+    const detailsModal = document.getElementById('details-modal');
+
+    // State
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let entries = JSON.parse(localStorage.getItem('tto_takvim_entries')) || {};
+    const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+    const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+    let isAdmin = false;
+
+    // --- ADMIN MODE & Netlify Identity ---
+    const updateAdminStatus = (user) => {
+        isAdmin = !!user;
+        document.body.classList.toggle('admin-mode', isAdmin);
+        
+        if (user) {
+            userPanel.innerHTML = `<span>${user.email}</span><button id="logout-btn">Çıkış Yap</button>`;
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                if (window.netlifyIdentity) {
+                    window.netlifyIdentity.logout();
+                }
+            });
+        } else {
+            userPanel.innerHTML = `<a href="/inNout.html" target="_blank">Giriş Yap</a>`;
+        }
+
+        renderYearView();
+        if (!monthView.classList.contains('hidden')) {
+            renderCalendar();
+        }
+    };
+
+    if (window.netlifyIdentity) {
+        netlifyIdentity.on('init', user => updateAdminStatus(user));
+        netlifyIdentity.on('login', user => updateAdminStatus(user));
+        netlifyIdentity.on('logout', () => updateAdminStatus(null));
+    }
+
+    // --- VIEW MANAGEMENT ---
+    const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
+    const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
+
+    // --- RENDER FUNCTIONS ---
+    const renderYearView = () => {
+        yearStr.textContent = currentYear;
+        yearViewBody.innerHTML = '';
+        for (let i = 0; i < 12; i++) {
+            const miniCalendar = document.createElement('div');
+            miniCalendar.className = 'mini-calendar';
+            miniCalendar.addEventListener('click', () => { currentDate = new Date(currentYear, i, 1); showMonthView(); });
+            const header = document.createElement('div');
+            header.className = 'mini-calendar-header';
+            header.textContent = monthNames[i];
+            const dayNamesContainer = document.createElement('div');
+            dayNamesContainer.className = 'mini-day-names';
+            dayNames.forEach(name => dayNamesContainer.innerHTML += `<div>${name}</div>`);
+            const dayGrid = document.createElement('div');
+            dayGrid.className = 'mini-day-grid';
+            const firstDay = new Date(currentYear, i, 1);
+            const daysInMonth = new Date(currentYear, i + 1, 0).getDate();
+            let startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+            for (let j = 0; j < startDay; j++) { dayGrid.innerHTML += `<div class="mini-day"></div>`; }
+            for (let j = 1; j <= daysInMonth; j++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'mini-day';
+                dayEl.textContent = j;
+                const dateKey = `${currentYear}-${String(i + 1).padStart(2, '0')}-${String(j).padStart(2, '0')}`;
+                if (entries[dateKey]) dayEl.classList.add('has-event');
+                const monthKey = `${currentYear}-${String(i + 1).padStart(2, '0')}`;
+                if (entries[monthKey] && entries[monthKey].some(e => e.type === 'monthly')) {
+                    dayEl.classList.add('is-monthly');
+                }
+                const today = new Date();
+                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) {
+                    dayEl.classList.add('is-today');
+                }
+                dayGrid.appendChild(dayEl);
+            }
+            miniCalendar.append(header, dayNamesContainer, dayGrid);
+            yearViewBody.appendChild(miniCalendar);
+        }
+    };
+    
+    const renderCalendar = () => {
+        calendarGridContainer.innerHTML = '';
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        monthYearStr.textContent = `${monthNames[month]} ${year}`;
+        const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
+        const isMonthlyEvent = entries[monthKey]?.some(e => e.type === 'monthly');
+        
+        const manageProjectsBtn = document.getElementById('manage-projects-btn');
+        if (manageProjectsBtn) {
+            manageProjectsBtn.classList.toggle('hidden', !(isAdmin && isMonthlyEvent));
+        }
+
+        dayNames.forEach(name => {
+            const dayNameEl = document.createElement('div');
+            dayNameEl.className = 'day-name';
+            dayNameEl.textContent = name;
+            calendarGridContainer.appendChild(dayNameEl);
+        });
+
+        const firstDayOfMonth = new Date(year, month, 1);
+        let dayOfWeek = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay();
+        const startDate = new Date(firstDayOfMonth);
+        startDate.setDate(startDate.getDate() - (dayOfWeek - 1));
+        
+        for (let i = 0; i < 42; i++) {
+            const currentDay = new Date(startDate);
+            currentDay.setDate(startDate.getDate() + i);
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day');
+            const dateKey = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(currentDay.getDate()).padStart(2, '0')}`;
+            dayDiv.dataset.dateKey = dateKey;
+
+            if (currentDay.getMonth() !== month) {
+                dayDiv.classList.add('prev-next-month-day');
+            } else if (isMonthlyEvent) {
+                dayDiv.classList.add('monthly-event-day');
+            }
+
+            const today = new Date();
+            if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) {
+                dayDiv.classList.add('today');
+            }
+            
+            dayDiv.innerHTML = `<div class="day-number">${currentDay.getDate()}</div>`;
+            const dayHasEvents = entries[dateKey]?.some(e => e.type === 'daily');
+
+            if (dayHasEvents) {
+                const eventListDay = document.createElement('div');
+                eventListDay.classList.add('event-list-day');
+                entries[dateKey].filter(e => e.type === 'daily').map(event => {
+                    eventListDay.innerHTML += `<div class="event-item-day">${event.title}</div>`;
+                });
+                dayDiv.appendChild(eventListDay);
+            }
+
+            if (isAdmin) {
+                if (currentDay.getMonth() === month) {
+                    const addBtn = document.createElement('button');
+                    addBtn.className = 'add-day-btn';
+                    addBtn.textContent = '+';
+                    dayDiv.appendChild(addBtn);
+                }
+                if (dayHasEvents) {
+                    dayDiv.classList.add('clickable');
+                }
+            }
+            calendarGridContainer.appendChild(dayDiv);
+        }
+    };
+
+    const setupModal = (modal) => {
+        if (!modal) return;
+        const closeBtn = modal.querySelector('.close-btn');
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+    };
+    [entryModal, detailsModal, manageModal].forEach(setupModal);
+    
+    const openEntryModalForDate = (dateKey) => {
+        entryModal.querySelector('form').reset();
+        document.getElementById('entry-date-input').value = dateKey;
+        document.getElementById('type-daily').checked = true;
+        toggleFormInputs();
+        entryModal.style.display = 'flex';
+    };
+
+    const openDetailsModal = (dateKey) => {
+        const dailyEntries = entries[dateKey]?.filter(e => e.type === 'daily');
+        if (!dailyEntries || dailyEntries.length === 0) return;
+        const mainEntry = dailyEntries[0];
+        
+        const dateObj = new Date(dateKey + 'T00:00:00');
+        const formattedDate = `${dateObj.getDate()} ${monthNames[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+        document.getElementById('details-title').textContent = mainEntry.title;
+        document.getElementById('details-date').textContent = formattedDate;
+        const mediaContainer = document.getElementById('details-media-container');
+        const descriptionDiv = document.getElementById('details-description');
+        mediaContainer.innerHTML = '';
+        descriptionDiv.innerHTML = '';
+        
+        if (mainEntry.description) {
+            if (mainEntry.description.includes('instagram.com')) {
+                mediaContainer.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${mainEntry.description}"></blockquote>`;
+                if (window.instgrm) window.instgrm.Embeds.process();
+            } else if (mainEntry.description.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                mediaContainer.innerHTML = `<img src="${mainEntry.description}" alt="Etkinlik Görseli">`;
+            } else {
+                descriptionDiv.textContent = mainEntry.description;
+            }
+        }
+        
+        document.getElementById('manage-day-btn').onclick = () => {
+            detailsModal.style.display = 'none';
+            openManageModal(dateKey);
+        };
+        detailsModal.style.display = 'flex';
+    };
+
+    const openManageModal = (key) => {
+        const isMonthKey = key.length === 7;
+        const type = isMonthKey ? 'monthly' : 'daily';
+        document.getElementById('manage-modal-title').textContent = `Kayıtları Yönet`;
+        const entryList = document.getElementById('entry-list');
+        entryList.innerHTML = '';
+        const items = entries[key]?.filter(e => e.type === type) || [];
+        if (items.length === 0) {
+            entryList.innerHTML = '<li>Bu seçime ait silinecek kayıt bulunmuyor.</li>';
+        } else {
+            items.forEach((item) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${item.title}</span><button class="delete-btn" data-key="${key}" data-type="${type}" data-title="${item.title}">Sil</button>`;
+                entryList.appendChild(li);
+            });
+        }
+        manageModal.style.display = 'flex';
+    };
+    
+    document.getElementById('entry-list').addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+            const key = e.target.dataset.key;
+            const type = e.target.dataset.type;
+            const title = e.target.dataset.title;
+            if (entries[key]) {
+                entries[key] = entries[key].filter(entry => !(entry.type === type && entry.title === title));
+                if (entries[key].length === 0) {
+                    delete entries[key];
+                }
+                localStorage.setItem('tto_takvim_entries', JSON.stringify(entries));
+                if (monthView.classList.contains('hidden')) { renderYearView(); } else { renderCalendar(); }
+                manageModal.style.display = 'none';
+            }
+        }
+    });
+
+    const entryForm = document.getElementById('entry-form');
+    const toggleFormInputs = () => {
+         const isDaily = document.getElementById('type-daily').checked;
+         document.getElementById('date-group').classList.toggle('hidden', !isDaily);
+         document.getElementById('month-group').classList.toggle('hidden', isDaily);
+         document.getElementById('entry-date-input').required = isDaily;
+         document.getElementById('entry-month-input').required = !isDaily;
+    };
+    entryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const type = document.querySelector('input[name="entry-type"]:checked').value;
+        const title = document.getElementById('entry-title-input').value.trim();
+        const description = document.getElementById('entry-description-input').value.trim();
+        let key, newEntry;
+        if (type === 'daily') {
+            const date = document.getElementById('entry-date-input').value;
+            if (!title || !date) return;
+            key = date;
+            newEntry = { type: 'daily', title, description };
+        } else {
+            const month = document.getElementById('entry-month-input').value;
+            if (!title || !month) return;
+            key = month;
+            newEntry = { type: 'monthly', title, description };
+        }
+        if (!entries[key]) entries[key] = [];
+        entries[key].push(newEntry);
+        localStorage.setItem('tto_takvim_entries', JSON.stringify(entries));
+        if (monthView.classList.contains('hidden')) { renderYearView(); } else { renderCalendar(); }
+        entryModal.style.display = 'none';
+    });
+    
+    document.getElementById('prev-year-btn').addEventListener('click', () => { currentYear--; renderYearView(); });
+    document.getElementById('next-year-btn').addEventListener('click', () => { currentYear++; renderYearView(); });
+    document.getElementById('prev-month-btn').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+    document.getElementById('next-month-btn').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+    document.getElementById('today-btn').addEventListener('click', () => { currentDate = new Date(); showMonthView(); });
+    document.getElementById('back-to-year-view-btn').addEventListener('click', showYearView);
+    document.querySelectorAll('input[name="entry-type"]').forEach(radio => radio.addEventListener('change', toggleFormInputs));
+    
+    calendarGridContainer.addEventListener('click', (e) => {
+        const target = e.target;
+        const dayElement = target.closest('.day');
+        if (!dayElement || dayElement.classList.contains('prev-next-month-day')) return;
+
+        if (target.classList.contains('add-day-btn')) {
+            e.stopPropagation();
+            openEntryModalForDate(dayElement.dataset.dateKey);
+        } else if (dayElement.classList.contains('clickable')) {
+            openDetailsModal(dayElement.dataset.dateKey);
+        }
+    });
+    
+    const manageProjectsBtn = document.getElementById('manage-projects-btn');
+    if(manageProjectsBtn) {
+        manageProjectsBtn.addEventListener('click', () => {
+            const monthKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
+            openManageModal(monthKey);
+        });
+    }
+
+    showYearView();
+});
