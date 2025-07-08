@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Giriş - TTO Takvim</title>
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        body { background-color: #f0f2f5; }
+    </style>
+</head>
+<body>
+    <script>
+        // Sayfa yüklendiğinde Netlify Identity giriş panelini otomatik olarak aç
+        window.netlifyIdentity.on("init", user => {
+            if (!user) {
+                window.netlifyIdentity.open();
+            }
+        });
+
+        // Kullanıcı giriş yaparsa veya paneli kapatırsa ana sayfaya yönlendir
+        window.netlifyIdentity.on("login", () => {
+            window.location.href = "/";
+        });
+        window.netlifyIdentity.on("close", () => {
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>
