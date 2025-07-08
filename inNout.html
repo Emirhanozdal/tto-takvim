@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Yönetim Paneli - TTO Takvim</title>
-    <!-- TEMEL KÜTÜPHANE, WIDGET DEĞİL! -->
-    <script type="text/javascript" src="https://unpkg.com/netlify-auth-providers"></script>
+    <!-- Standart ve güçlü Netlify Widget'ına geri dönüyoruz -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; font-family: 'Inter', sans-serif; }
-        .login-container { text-align: center; background: white; padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .login-container { display: none; text-align: center; background: white; padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .login-container img.logo { max-height: 50px; margin-bottom: 20px; }
         .login-container h1 { color: #003B71; margin-bottom: 10px; }
         .login-container p { color: #6C757D; margin-bottom: 30px; }
@@ -21,45 +21,33 @@
              background-color: #00569E;
              box-shadow: 0 0 16px 4px rgba(255, 167, 38, 0.7);
         }
-        .message { display: none; color: #003B71; }
     </style>
 </head>
 <body>
+    <!-- Kendi tasarımımızı gösteriyoruz -->
     <div id="login-box" class="login-container">
         <img src="logo.png" alt="TTO Logo" class="logo">
         <h1>Yönetim Paneli</h1>
         <p>İçerik eklemek için lütfen giriş yapın.</p>
         <button id="login-btn">E-posta ile Giriş Yap</button>
     </div>
-    <div id="message-box" class="login-container message">
-        <h1>İşlem Başarılı!</h1>
-        <p>Bu pencereyi kapatabilirsiniz. Takvim güncelleniyor...</p>
-    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Netlify sitesinin adını (subdomain) buraya yazın
-            const siteId = "tto-takvim.netlify.app"; 
-            const authenticator = new netlify.default({site_id: siteId});
-
-            const loginBtn = document.getElementById("login-btn");
             const loginBox = document.getElementById("login-box");
-            const messageBox = document.getElementById("message-box");
+            loginBox.style.display = 'block'; // Tasarımımızı göster
 
-            // Eğer kullanıcı zaten giriş yapmışsa, hemen mesajı göster
-            if (netlify.currentUser()) {
-                loginBox.style.display = 'none';
-                messageBox.style.display = 'block';
-            }
-
-            loginBtn.addEventListener("click", () => {
-                authenticator.authenticate({provider: "email", scope: "user"}, (err, data) => {
-                    if (err) {
-                        return console.error(err);
-                    }
-                    loginBox.style.display = 'none';
-                    messageBox.style.display = 'block';
+            // Netlify Widget'ı arka planda hazır olduğunda...
+            window.netlifyIdentity.on('init', () => {
+                // Giriş yap butonuna tıklandığında Netlify'ın kendi panelini aç
+                document.getElementById("login-btn").addEventListener("click", () => {
+                    window.netlifyIdentity.open();
                 });
+            });
+            
+            // Kullanıcı giriş yaptığında bu pencereyi kapatmaya çalış
+            window.netlifyIdentity.on('login', () => {
+                window.close();
             });
         });
     </script>
