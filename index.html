@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Instagram Gömme Scripti -->
+    <script async src="//www.instagram.com/embed.js"></script>
 </head>
 <body>
 
@@ -45,7 +47,6 @@
             </div>
         </header>
         <div id="calendar-grid-container"></div>
-        <!-- Büyük + butonu kaldırıldı -->
     </div>
 
     <div id="entry-modal" class="modal">
@@ -60,7 +61,7 @@
                 <div id="event-inputs">
                     <div class="form-group"><label for="event-title-input">Etkinlik Başlığı</label><input type="text" id="event-title-input" required></div>
                     <div class="form-group"><label for="event-date-input">Tarih</label><input type="date" id="event-date-input" required></div>
-                    <div class="form-group"><label for="event-image-input">Görsel URL (İsteğe Bağlı)</label><input type="url" id="event-image-input" placeholder="https://ornek.com/gorsel.jpg"></div>
+                    <div class="form-group"><label for="event-image-input">Görsel veya Instagram Linki</label><input type="url" id="event-image-input" placeholder="Resim veya Instagram gönderi URL'si"></div>
                 </div>
                 <div id="project-inputs" class="hidden">
                      <div class="form-group"><label for="project-title-input">Proje Başlığı</label><input type="text" id="project-title-input"></div>
@@ -83,8 +84,8 @@
     <div id="details-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">×</span>
-            <div id="details-image-container" class="hidden">
-                <img id="details-image" src="" alt="Etkinlik Görseli">
+            <div id="details-media-container">
+                <!-- Görsel veya Instagram gönderisi buraya gelecek -->
             </div>
             <div id="details-content">
                 <h3 id="details-title"></h3>
