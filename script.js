@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 user.logout().then(() => checkAdminStatus());
             });
         } else {
-            userPanel.innerHTML = `<a href="/inNout.html" target="_blank" class="fire-shadow">Giriş Yap</a>`;
+            userPanel.innerHTML = `<a href="/inNout.html" target="_blank" class="fire-shadow">Yönetim Paneli</a>`;
         }
     };
     
