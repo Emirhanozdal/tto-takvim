@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Netlify'ın temel kimlik doğrulama kütüphanesi -->
     <script type="text/javascript" src="https://unpkg.com/netlify-identity-gotrue@1.0.1/dist/gotrue.js"></script>
     <script async src="//www.instagram.com/embed.js"></script>
 </head>
@@ -24,9 +23,7 @@
                 <h2 id="year-str" class="header-title"></h2>
                 <button id="next-year-btn" class="nav-btn">></button>
             </div>
-            <div id="user-panel" class="header-actions">
-                <!-- JavaScript bu alanı dolduracak -->
-            </div>
+            <!-- Sağ üstteki admin paneli tamamen kaldırıldı -->
         </header>
         <div id="year-view-body"></div>
     </div>
@@ -42,6 +39,8 @@
                  <button id="manage-projects-btn" class="hidden">Projeleri Yönet</button>
                  <button id="back-to-year-view-btn">Yıla Dön</button>
                  <button id="today-btn">Bugün</button>
+                 <!-- Çıkış butonu JavaScript ile buraya eklenecek -->
+                 <div id="logout-container"></div>
             </div>
         </header>
         <div id="calendar-grid-container"></div>
