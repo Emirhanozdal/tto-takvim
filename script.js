@@ -16,7 +16,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- GİRİŞ SİSTEMİ BAŞLATMA ---
-    // Önceki cevapta verdiğim GoTrue tabanlı giriş sistemiyle uyumlu.
+    // GoTrue kütüphanesi ile Netlify Identity'yi yönetiyoruz.
     const auth = new GoTrue({
         APIUrl: "https://tto-takvim.netlify.app/.netlify/identity",
         setCookie: true
@@ -31,15 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
         isAdmin = !!user; // Yeni durumu belirle (true veya false)
 
         // Sadece admin durumu değiştiyse arayüzü yeniden çiz.
-        // Bu, gereksiz güncellemeleri ve sayfa titremesini önler.
         if (wasAdmin !== isAdmin) {
             document.body.classList.toggle('admin-mode', isAdmin);
             updateUserPanel(user); // Sağ üst paneli güncelle
             
             // Görünen takvimi yeniden çizerek admin yetkilerini uygula
-            if (!document.getElementById('month-view').classList.contains('hidden')) {
+            if (document.getElementById('month-view') && !document.getElementById('month-view').classList.contains('hidden')) {
                 renderCalendar();
-            } else {
+            } else if (document.getElementById('year-view')) {
                 renderYearView();
             }
         }
@@ -65,13 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- SAYFA YÜKLENDİĞİNDE VE PERİYODİK OLARAK KONTROL ---
-    // Sayfa ilk yüklendiğinde durumu kontrol et
     checkAdminStatus();
-    // Ve her 2 saniyede bir, başka bir sekmede giriş yapılıp yapılmadığını kontrol et.
-    // SORUNU ÇÖZEN EN KRİTİK SATIR BUDUR.
+    // Her 2 saniyede bir, başka bir sekmede giriş yapılıp yapılmadığını kontrol et.
     setInterval(checkAdminStatus, 2000);
 
-    // --- GERİ KALAN TÜM TAKVİM KODLARI (DEĞİŞİKLİK YOK) ---
+    // --- GERİ KALAN TÜM TAKVİM KODLARI ---
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
     const yearStr = document.getElementById('year-str');
@@ -176,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     dayDiv.appendChild(addBtn);
                 }
                 if (dayHasEvents) { dayDiv.classList.add('clickable'); }
+            } else {
+                 if (dayHasEvents) { dayDiv.classList.add('clickable'); }
             }
             calendarGridContainer.appendChild(dayDiv);
         }
