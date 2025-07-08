@@ -5,36 +5,41 @@
     <title>Yönetim Paneli - TTO Takvim</title>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
-        body { background-color: #f0f2f5; font-family: sans-serif; }
-        .message-box { display: none; text-align: center; margin-top: 20vh; color: #333; }
+        body { background-color: #f0f2f5; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .message-box { display: none; text-align: center; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
     <div id="message-box" class="message-box">
         <h1>İşlem Tamamlandı</h1>
-        <p>Bu pencereyi şimdi kapatabilirsiniz. Ana takvim sayfası otomatik olarak güncellenecektir.</p>
+        <p>Bu pencereyi şimdi kapatabilirsiniz. Ana takvim sayfası birkaç saniye içinde güncellenecektir.</p>
     </div>
     <script>
         if (window.netlifyIdentity) {
-            window.netlifyIdentity.on('init', user => {
-                if (!user) {
-                    window.netlifyIdentity.open(); // Giriş yapılmamışsa paneli aç
+            const handleAuth = (user) => {
+                const messageBox = document.getElementById('message-box');
+                if (user) {
+                    messageBox.querySelector('h1').textContent = 'Giriş Başarılı!';
                 } else {
-                    window.netlifyIdentity.open(); // Zaten giriş yapılmışsa da paneli aç (örn: çıkış yapmak için)
+                    messageBox.querySelector('h1').textContent = 'Çıkış Yapıldı';
                 }
-            });
-            window.netlifyIdentity.on('login', () => {
-                document.getElementById('message-box').style.display = 'block';
+                messageBox.style.display = 'block';
                 window.netlifyIdentity.close();
-            });
-            window.netlifyIdentity.on('logout', () => {
-                window.close();
-            });
+            };
+
+            window.netlifyIdentity.on('login', handleAuth);
+            window.netlifyIdentity.on('logout', () => handleAuth(null));
+            
+            // Panel X ile kapatılırsa, hiçbir şey yapma, sadece pencereyi kapat.
             window.netlifyIdentity.on('close', () => {
-                // Eğer kullanıcı giriş yapmadan paneli kapatırsa, pencereyi de kapat
                 if (!window.netlifyIdentity.currentUser()) {
                     window.close();
                 }
+            });
+
+            // Sayfa yüklendiğinde, her zaman paneli aç.
+            window.netlifyIdentity.on('init', () => {
+                window.netlifyIdentity.open();
             });
         }
     </script>
