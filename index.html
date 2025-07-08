@@ -8,47 +8,53 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
     <script async src="//www.instagram.com/embed.js"></script>
 </head>
 <body>
+
     <video autoplay muted loop id="video-background">
         <source src="background.mp4" type="video/mp4">
     </video>
+
     <div id="year-view" class="container">
         <header class="app-header">
-            <img src="logo.png" alt="TTO Logo" class="logo">
+            <img src="logo.png" alt="TTO Logo" class="logo" id="logo-trigger">
             <div class="header-nav">
                 <button id="prev-year-btn" class="nav-btn"><</button>
                 <h2 id="year-str" class="header-title"></h2>
                 <button id="next-year-btn" class="nav-btn">></button>
             </div>
-            <div id="user-panel" class="header-actions"></div>
+            <!-- User panel div'i tamamen kaldırıldı -->
         </header>
         <div id="year-view-body"></div>
     </div>
+
     <div id="month-view" class="container hidden">
          <header class="app-header">
-            <img src="logo.png" alt="TTO Logo" class="logo">
+            <img src="logo.png" alt="TTO Logo" class="logo" id="logo-trigger-month">
             <div class="header-nav">
                 <button id="prev-month-btn" class="nav-btn"><</button>
                 <h2 id="month-year-str" class="header-title"></h2>
                 <button id="next-month-btn" class="nav-btn">></button>
             </div>
             <div class="header-actions">
+                 <button id="manage-projects-btn" class="hidden">Projeleri Yönet</button>
                  <button id="back-to-year-view-btn">Yıla Dön</button>
                  <button id="today-btn">Bugün</button>
             </div>
         </header>
         <div id="calendar-grid-container"></div>
     </div>
+
+    <!-- Modallar aynı kalıyor -->
     <div id="entry-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">×</span>
             <h3 class="modal-title">Yeni Kayıt Ekle</h3>
             <form id="entry-form">
                 <div class="form-group"><label for="entry-title-input">Başlık</label><input type="text" id="entry-title-input" required></div>
-                <div class="form-group"><label for="entry-description-input">Açıklama / Link</label><input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram linki..."></div>
+                <div class="form-group"><label for="entry-description-input">Açıklama / Link</label><input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram URL'si"></div>
                 <div class="form-group"><label>Kayıt Türü</label><div id="entry-type-selector"><input type="radio" id="type-daily" name="entry-type" value="daily" checked><label for="type-daily">Tek Günlük</label><input type="radio" id="type-monthly" name="entry-type" value="monthly"><label for="type-monthly">Aylık</label></div></div>
                 <div class="form-group" id="date-group"><label for="entry-date-input">Tarih</label><input type="date" id="entry-date-input" required></div>
                 <div class="form-group hidden" id="month-group"><label for="entry-month-input">Ay</label><input type="month" id="entry-month-input"></div>
@@ -75,6 +81,7 @@
             <ul id="entry-list"></ul>
         </div>
     </div>
-    <script src="script.js" defer></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
