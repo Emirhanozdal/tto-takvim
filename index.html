@@ -12,12 +12,9 @@
     <script async src="//www.instagram.com/embed.js"></script>
 </head>
 <body>
-
     <video autoplay muted loop id="video-background">
         <source src="background.mp4" type="video/mp4">
-        Tarayıcınız video etiketini desteklemiyor.
     </video>
-
     <div id="year-view" class="container">
         <header class="app-header">
             <img src="logo.png" alt="TTO Logo" class="logo">
@@ -30,7 +27,6 @@
         </header>
         <div id="year-view-body"></div>
     </div>
-
     <div id="month-view" class="container hidden">
          <header class="app-header">
             <img src="logo.png" alt="TTO Logo" class="logo">
@@ -46,40 +42,20 @@
         </header>
         <div id="calendar-grid-container"></div>
     </div>
-
     <div id="entry-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">×</span>
             <h3 class="modal-title">Yeni Kayıt Ekle</h3>
             <form id="entry-form">
-                <div class="form-group">
-                    <label for="entry-title-input">Başlık</label>
-                    <input type="text" id="entry-title-input" required>
-                </div>
-                <div class="form-group">
-                    <label for="entry-description-input">Açıklama / Link</label>
-                    <input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram linki...">
-                </div>
-                <div class="form-group">
-                    <label>Kayıt Türü</label>
-                    <div id="entry-type-selector">
-                        <input type="radio" id="type-daily" name="entry-type" value="daily" checked><label for="type-daily">Tek Günlük</label>
-                        <input type="radio" id="type-monthly" name="entry-type" value="monthly"><label for="type-monthly">Aylık</label>
-                    </div>
-                </div>
-                <div class="form-group" id="date-group">
-                    <label for="entry-date-input">Tarih</label>
-                    <input type="date" id="entry-date-input" required>
-                </div>
-                <div class="form-group hidden" id="month-group">
-                    <label for="entry-month-input">Ay</label>
-                    <input type="month" id="entry-month-input">
-                </div>
+                <div class="form-group"><label for="entry-title-input">Başlık</label><input type="text" id="entry-title-input" required></div>
+                <div class="form-group"><label for="entry-description-input">Açıklama / Link</label><input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram linki..."></div>
+                <div class="form-group"><label>Kayıt Türü</label><div id="entry-type-selector"><input type="radio" id="type-daily" name="entry-type" value="daily" checked><label for="type-daily">Tek Günlük</label><input type="radio" id="type-monthly" name="entry-type" value="monthly"><label for="type-monthly">Aylık</label></div></div>
+                <div class="form-group" id="date-group"><label for="entry-date-input">Tarih</label><input type="date" id="entry-date-input" required></div>
+                <div class="form-group hidden" id="month-group"><label for="entry-month-input">Ay</label><input type="month" id="entry-month-input"></div>
                 <button type="submit" class="form-button fire-shadow">Kaydı Ekle</button>
             </form>
         </div>
     </div>
-
     <div id="details-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">×</span>
@@ -92,7 +68,6 @@
             </div>
         </div>
     </div>
-
     <div id="manage-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">×</span>
@@ -100,10 +75,6 @@
             <ul id="entry-list"></ul>
         </div>
     </div>
-    
-    <!-- Script.js artık burada, şifreli olarak çalıştırılacak -->
-        <script>
-        document.addEventListener("DOMContentLoaded",(()=>{let e=document.getElementById("year-view"),t=document.getElementById("month-view"),n=document.getElementById("user-panel"),l=document.getElementById("year-str"),a=document.getElementById("year-view-body"),s=document.getElementById("month-year-str"),i=document.getElementById("calendar-grid-container"),d=document.getElementById("entry-modal"),o=document.getElementById("manage-modal"),r=document.getElementById("details-modal");let c=new Date,m=c.getFullYear(),p=JSON.parse(localStorage.getItem("tto_takvim_entries"))||{},u=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],h=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];let g=!1;const E=t=>{g=!!t,document.body.classList.toggle("admin-mode",g),t?n.innerHTML=`<span>${t.email}</span><button id="logout-btn">Çıkış Yap</button>`:n.innerHTML='<a href="/inNout.html">Giriş Yap</a>',t&&document.getElementById("logout-btn").addEventListener("click",()=>window.netlifyIdentity.logout()),y(),e.classList.contains("hidden")||f()};window.netlifyIdentity&&(window.netlifyIdentity.on("init",e=>E(e)),window.netlifyIdentity.on("login",e=>E(e)),window.netlifyIdentity.on("logout",()=>E(null)));const y=()=>{l.textContent=m,a.innerHTML="";for(let e=0;e<12;e++){let t=document.createElement("div");t.className="mini-calendar",t.addEventListener("click",()=>{c=new Date(m,e,1),w()});let n=document.createElement("div");n.className="mini-calendar-header",n.textContent=u[e];let s=document.createElement("div");s.className="mini-day-names",h.forEach(e=>s.innerHTML+=`<div>${e}</div>`);let i=document.createElement("div");i.className="mini-day-grid";let d=new Date(m,e,1),o=new Date(m,e+1,0).getDate(),r=0===d.getDay()?6:d.getDay()-1;for(let e=0;e<r;e++)i.innerHTML+='<div class="mini-day"></div>';for(let t=1;t<=o;t++){let n=document.createElement("div");n.className="mini-day",n.textContent=t;let l=`${m}-${String(e+1).padStart(2,"0")}-${String(t).padStart(2,"0")}`;p[l]&&n.classList.add("has-event");let a=`${m}-${String(e+1).padStart(2,"0")}`;p[a]?.some(e=>"monthly"===e.type)&&n.classList.add("is-monthly");let s=new Date;t===s.getDate()&&e===s.getMonth()&&m===s.getFullYear()&&n.classList.add("is-today"),i.appendChild(n)}t.append(n,s,i),a.appendChild(t)}},f=()=>{i.innerHTML="";let e=c.getFullYear(),t=c.getMonth();s.textContent=`${u[t]} ${e}`;let n=`${e}-${String(t+1).padStart(2,"0")}`;p[n]?.filter(e=>"monthly"===e.type)||[];h.forEach(e=>{let t=document.createElement("div");t.className="day-name",t.textContent=e,i.appendChild(t)});let l=new Date(e,t,1),d=0===l.getDay()?7:l.getDay(),o=new Date(l);o.setDate(o.getDate()-(d-1));for(let s=0;s<42;s++){let e=new Date(o);e.setDate(o.getDate()+s);let d=document.createElement("div");d.classList.add("day");let r=`${e.getFullYear()}-${String(e.getMonth()+1).padStart(2,"0")}-${String(e.getDate()).padStart(2,"0")}`;e.getMonth()!==t?d.classList.add("prev-next-month-day"):p[n]?.some(e=>"monthly"===e.type)&&d.classList.add("monthly-event-day");let c=new Date;e.getDate()===c.getDate()&&e.getMonth()===c.getMonth()&&e.getFullYear()===c.getFullYear()&&d.classList.add("today"),d.innerHTML=`<div class="day-number">${e.getDate()}</div>`;let m=p[r]?.some(e=>"daily"===e.type);m&&(d.innerHTML+='<div class="event-list-day">'+p[r].filter(e=>"daily"===e.type).map(e=>`<div class="event-item-day">${e.title}</div>`).join("")+"</div>"),g&&(e.getMonth()===t&&(d.innerHTML+=`<button class="add-day-btn" data-date="${r}">+</button>`),m&&(d.classList.add("clickable"),d.addEventListener("click",()=>b(r)))),i.appendChild(d)}},b=e=>{let t=p[e]?.filter(e=>"daily"===e.type);if(!t||0===t.length)return;let n=t[0],l=new Date(e+"T00:00:00"),a=`${l.getDate()} ${u[l.getMonth()]} ${l.getFullYear()}`;document.getElementById("details-title").textContent=n.title,document.getElementById("details-date").textContent=a;let s=document.getElementById("details-media-container");s.innerHTML="";let i=document.getElementById("details-description");i.innerHTML="",n.description&&(i.textContent=n.description,n.description.includes("instagram.com")?(s.innerHTML=`<blockquote class="instagram-media" data-instgrm-permalink="${n.description}"></blockquote>`,window.instgrm&&window.instgrm.Embeds.process()):n.description.match(/\.(jpeg|jpg|gif|png)$/)&&(s.innerHTML=`<img src="${n.description}" alt="Etkinlik Görseli">`)),s.innerHTML?s.classList.remove("hidden"):s.classList.add("hidden"),document.getElementById("manage-day-btn").onclick=()=>{r.style.display="none",v(e)},r.style.display="flex"},v=e=>{let t=e.length===7,n=t?"monthly":"daily";document.getElementById("manage-modal-title").textContent=`Kayıtları Yönet`;let l=document.getElementById("entry-list");l.innerHTML="";let a=p[e]?.filter(t=>t.type===n)||[];a.length===0?l.innerHTML="<li>Silinecek kayıt bulunmuyor.</li>":a.forEach((t,n)=>{let a=document.createElement("li");a.innerHTML=`<span>${t.title}</span><button class="delete-btn" data-key="${e}" data-index="${n}">Sil</button>`,l.appendChild(a)}),o.style.display="flex"},k=e=>{let t=e.querySelector(".close-btn");t.addEventListener("click",()=>e.style.display="none"),e.addEventListener("click",t=>{t.target===e&&(e.style.display="none")})};[d,o,r].forEach(k);const L=e=>{let t=document.getElementById("entry-form");t.reset(),document.getElementById("entry-date-input").value=e,document.getElementById("type-daily").checked=!0,C(),d.style.display="flex"};document.getElementById("entry-list").addEventListener("click",e=>{if(e.target.classList.contains("delete-btn")){let t=e.target.dataset.key,n=parseInt(e.target.dataset.index),l=t.length===7?"monthly":"daily",a=0,s=-1;for(let e=0;e<p[t].length;e++)if(p[t][e].type===l){if(a===n){s=e;break}a++}s!==-1&&(p[t].splice(s,1),0===p[t].length&&delete p[t],localStorage.setItem("tto_takvim_entries",JSON.stringify(p)),f(),o.style.display="none")}});const C=()=>{let e=document.getElementById("type-daily").checked;document.getElementById("date-group").classList.toggle("hidden",!e),document.getElementById("month-group").classList.toggle("hidden",e),document.getElementById("entry-date-input").required=e,document.getElementById("entry-month-input").required=!e};document.getElementById("entry-form").addEventListener("submit",e=>{e.preventDefault();let t=document.querySelector('input[name="entry-type"]:checked').value,n=document.getElementById("entry-title-input").value.trim(),l=document.getElementById("entry-description-input").value.trim(),a,s;if("daily"===t){let e=document.getElementById("entry-date-input").value;if(!n||!e)return;a=e,s={type:"daily",title:n,description:l}}else{let e=document.getElementById("entry-month-input").value;if(!n||!e)return;a=e,s={type:"monthly",title:n,description:l}}p[a]||(p[a]=[]),p[a].push(s),localStorage.setItem("tto_takvim_entries",JSON.stringify(p)),t.classList.contains("hidden")?y():f(),d.style.display="none"});const w=()=>{e.classList.add("hidden"),t.classList.remove("hidden"),f()};document.getElementById("prev-year-btn").addEventListener("click",()=>{m--,y()}),document.getElementById("next-year-btn").addEventListener("click",()=>{m++,y()}),document.getElementById("prev-month-btn").addEventListener("click",()=>{c.setMonth(c.getMonth()-1),f()}),document.getElementById("next-month-btn").addEventListener("click",()=>{c.setMonth(c.getMonth()+1),f()}),document.getElementById("today-btn").addEventListener("click",()=>{c=new Date,w()}),document.getElementById("back-to-year-view-btn").addEventListener("click",showYearView),document.querySelectorAll('input[name="entry-type"]').forEach(e=>e.addEventListener("change",C)),document.getElementById("calendar-grid-container").addEventListener("click",e=>{e.target.classList.contains("add-day-btn")&&L(e.target.dataset.date)}),y()}));
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>
