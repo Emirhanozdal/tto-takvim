@@ -2,15 +2,56 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Giriş - TTO Takvim</title>
+    <title>Giriş / Yönetim - TTO Takvim</title>
+    <!-- Sadece Netlify'ın kendi script'ini çağırıyoruz, başka hiçbir şeye ihtiyacımız yok -->
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style> body { background-color: #f0f2f5; } </style>
+    <style>
+        /* Sayfanın ortalanması ve temiz görünmesi için basit stiller */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            font-family: sans-serif;
+            color: #555;
+        }
+        .loading-text {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 <body>
+
+    <div class="loading-text">Yönetim paneli yükleniyor...</div>
+
     <script>
-        window.netlifyIdentity.on("init", user => { if (!user) { window.netlifyIdentity.open(); } });
-        window.netlifyIdentity.on("login", () => { window.location.href = "/"; });
-        window.netlifyIdentity.on("close", () => { window.location.href = "/"; });
+        // Sayfa yüklendiğinde Netlify Identity giriş panelini otomatik olarak aç
+        // Bu kod, ana script.js dosyasından tamamen bağımsız çalışır.
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                // Eğer kullanıcı zaten giriş yapmış değilse, giriş panelini aç.
+                if (!user) {
+                    window.netlifyIdentity.open();
+                } else {
+                    // Eğer kullanıcı zaten giriş yapmışsa ve bu sayfaya gelmişse,
+                    // onu doğrudan ana sayfaya geri gönder.
+                    window.location.href = "/";
+                }
+            });
+
+            // Kullanıcı başarıyla giriş yaparsa, onu ana sayfaya yönlendir.
+            window.netlifyIdentity.on("login", () => {
+                window.location.href = "/";
+            });
+
+            // Kullanıcı giriş panelini kapatırsa, onu yine ana sayfaya yönlendir.
+            window.netlifyIdentity.on("close", () => {
+                window.location.href = "/";
+            });
+        }
     </script>
+
 </body>
 </html>
