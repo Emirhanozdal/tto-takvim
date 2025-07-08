@@ -26,9 +26,7 @@
                 <h2 id="year-str" class="header-title"></h2>
                 <button id="next-year-btn" class="nav-btn">></button>
             </div>
-            <div id="user-panel" class="header-actions">
-                <!-- Bu alan JavaScript tarafından doldurulacak -->
-            </div>
+            <div id="user-panel" class="header-actions"></div>
         </header>
         <div id="year-view-body"></div>
     </div>
@@ -42,7 +40,6 @@
                 <button id="next-month-btn" class="nav-btn">></button>
             </div>
             <div class="header-actions">
-                 <button id="manage-projects-btn" class="hidden">Projeleri Yönet</button>
                  <button id="back-to-year-view-btn">Yıla Dön</button>
                  <button id="today-btn">Bugün</button>
             </div>
@@ -54,31 +51,32 @@
         <div class="modal-content">
             <span class="close-btn">×</span>
             <h3 class="modal-title">Yeni Kayıt Ekle</h3>
-            <div id="entry-type-selector">
-                <input type="radio" id="type-event" name="entry-type" value="event" checked><label for="type-event">Etkinlik</label>
-                <input type="radio" id="type-project" name="entry-type" value="project"><label for="type-project">Proje Başvurusu</label>
-            </div>
             <form id="entry-form">
-                <div id="event-inputs">
-                    <div class="form-group"><label for="event-title-input">Etkinlik Başlığı</label><input type="text" id="event-title-input" required></div>
-                    <div class="form-group"><label for="event-date-input">Tarih</label><input type="date" id="event-date-input" required></div>
-                    <div class="form-group"><label for="event-image-input">Görsel veya Instagram Linki</label><input type="url" id="event-image-input" placeholder="Resim veya Instagram gönderi URL'si"></div>
+                <div class="form-group">
+                    <label for="entry-title-input">Başlık</label>
+                    <input type="text" id="entry-title-input" required>
                 </div>
-                <div id="project-inputs" class="hidden">
-                     <div class="form-group"><label for="project-title-input">Proje Başlığı</label><input type="text" id="project-title-input"></div>
-                     <div class="form-group"><label for="project-month-input">Başvuru Ayı</label><input type="month" id="project-month-input"></div>
+                <div class="form-group">
+                    <label for="entry-description-input">Açıklama / Link</label>
+                    <input type="text" id="entry-description-input" placeholder="Açıklama, resim veya Instagram linki...">
+                </div>
+                <div class="form-group">
+                    <label>Kayıt Türü</label>
+                    <div id="entry-type-selector">
+                        <input type="radio" id="type-daily" name="entry-type" value="daily" checked><label for="type-daily">Tek Günlük</label>
+                        <input type="radio" id="type-monthly" name="entry-type" value="monthly"><label for="type-monthly">Aylık</label>
+                    </div>
+                </div>
+                <div class="form-group" id="date-group">
+                    <label for="entry-date-input">Tarih</label>
+                    <input type="date" id="entry-date-input" required>
+                </div>
+                <div class="form-group hidden" id="month-group">
+                    <label for="entry-month-input">Ay</label>
+                    <input type="month" id="entry-month-input">
                 </div>
                 <button type="submit" class="form-button fire-shadow">Kaydı Ekle</button>
             </form>
-        </div>
-    </div>
-
-    <div id="manage-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">×</span>
-            <h3 id="manage-modal-title" class="modal-title">Kayıtları Yönet</h3>
-            <p id="manage-modal-date"></p>
-            <ul id="entry-list"></ul>
         </div>
     </div>
 
@@ -89,11 +87,22 @@
             <div id="details-content">
                 <h3 id="details-title"></h3>
                 <p id="details-date"></p>
-                <button id="manage-event-btn" class="form-button fire-shadow">Bu Günü Yönet</button>
+                <div id="details-description"></div>
+                <button id="manage-day-btn" class="form-button fire-shadow">Bu Günü Yönet</button>
             </div>
         </div>
     </div>
+
+    <div id="manage-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3 id="manage-modal-title" class="modal-title">Kayıtları Yönet</h3>
+            <ul id="entry-list"></ul>
+        </div>
+    </div>
     
-    <script src="script.js"></script>
+    <!-- Script.js artık burada, şifreli olarak çalıştırılacak -->
+    <script id="main-script"></script>
+    <script src="script.js"></script> 
 </body>
 </html>
