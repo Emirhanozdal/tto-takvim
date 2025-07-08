@@ -1,43 +1,40 @@
-// --- KONSOL TEMİZLEME ---
-(function() { try { setInterval(() => { const s = new Date().getTime(); debugger; if (new Date().getTime() - s > 100) { console.clear(); console.log('%cBu alan sadece geliştiriciler içindir.', 'font-size: 20px; color: red; font-weight: bold;'); } }, 1000); } catch (e) {} })();
+// --- KONSOL TEMİZLEME VE GİZLEME (ÇALIŞAN VERSİYON) ---
+(function() {
+    try {
+        const checkDevTools = () => {
+            const start = new Date().getTime();
+            debugger;
+            const end = new Date().getTime();
+            if (end - start > 100) {
+                console.clear();
+                console.log('%cBu alan sadece geliştiriciler içindir.', 'font-size: 20px; color: red; font-weight: bold;');
+            }
+        };
+        setInterval(checkDevTools, 1000);
+    } catch (e) {}
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- AUTHENTICATION ---
-    const auth = new GoTrue({ APIUrl: "https://tto-takvim.netlify.app/.netlify/identity", setCookie: true });
-    let isAdmin = false;
-
-    const updateUserPanel = (user) => {
-        const userPanel = document.getElementById('user-panel');
-        if (!userPanel) return;
-
-        if (user) {
-            userPanel.innerHTML = `<span>${user.email}</span><button id="logout-btn">Çıkış Yap</button>`;
-            document.getElementById('logout-btn').addEventListener('click', () => {
-                user.logout().then(() => checkAdminStatus());
-            });
-        } else {
-            userPanel.innerHTML = `<a href="/inNout.html" target="_blank" class="fire-shadow">Yönetim Paneli</a>`;
+    // --- GİZLİ GİRİŞ İÇİN LOGO TIKLAMA MANTIĞI ---
+    let clickCount = 0;
+    let clickTimer = null;
+    const handleLogoClick = () => {
+        clickCount++;
+        if (clickTimer) clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 600);
+        if (clickCount === 3) {
+            clickCount = 0;
+            window.open('/inNout.html', '_blank');
         }
     };
+    document.querySelectorAll('.logo').forEach(logo => logo.addEventListener('click', handleLogoClick));
     
-    const checkAdminStatus = () => {
-        const user = auth.currentUser();
-        const wasAdmin = isAdmin;
-        isAdmin = !!user;
-
-        if (wasAdmin !== isAdmin) {
-            document.body.classList.toggle('admin-mode', isAdmin);
-            updateUserPanel(user);
-            renderYearView();
-            if (!document.getElementById('month-view').classList.contains('hidden')) {
-                renderCalendar();
-            }
-        }
-    };
-
-    // --- DOM ELEMENTS ---
+    // --- ANA UYGULAMA KODU ---
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
+    const logoutContainer = document.getElementById('logout-container');
     const yearStr = document.getElementById('year-str');
     const yearViewBody = document.getElementById('year-view-body');
     const monthYearStr = document.getElementById('month-year-str');
@@ -46,18 +43,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const manageModal = document.getElementById('manage-modal');
     const detailsModal = document.getElementById('details-modal');
 
-    // --- STATE ---
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
     let entries = JSON.parse(localStorage.getItem('tto_takvim_entries')) || {};
     const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+    let isAdmin = false;
 
-    // --- VIEW & RENDER ---
-    const showYearView = () => { if(yearView && monthView) { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); } }
-    const showMonthView = () => { if(yearView && monthView) { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); } }
+    const auth = new GoTrue({ APIUrl: "https://tto-takvim.netlify.app/.netlify/identity", setCookie: true });
+
+    const updateAdminStatus = () => {
+        const user = auth.currentUser();
+        const wasAdmin = isAdmin;
+        isAdmin = !!user;
+
+        if (wasAdmin !== isAdmin) {
+            document.body.classList.toggle('admin-mode', isAdmin);
+            
+            const logoutContainer = document.getElementById('logout-container');
+            if(logoutContainer) {
+                if (user) {
+                    logoutContainer.innerHTML = `<button id="logout-btn">Çıkış Yap (${user.email.split('@')[0]})</button>`;
+                    document.getElementById('logout-btn').addEventListener('click', () => {
+                        user.logout().then(() => updateAdminStatus());
+                    });
+                } else {
+                    logoutContainer.innerHTML = '';
+                }
+            }
+            renderYearView();
+            if (!monthView.classList.contains('hidden')) {
+                renderCalendar();
+            }
+        }
+    };
+    
+    // Sayfa yüklendiğinde ve her 2 saniyede bir durumu kontrol et
+    updateAdminStatus();
+    setInterval(updateAdminStatus, 2000);
+
+    const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
+    const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
+
     const renderYearView = () => {
-        if (!yearStr || !yearViewBody) return;
         yearStr.textContent = currentYear;
         yearViewBody.innerHTML = '';
         for (let i = 0; i < 12; i++) {
@@ -83,17 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dateKey = `${currentYear}-${String(i + 1).padStart(2, '0')}-${String(j).padStart(2, '0')}`;
                 if (entries[dateKey]) dayEl.classList.add('has-event');
                 const monthKey = `${currentYear}-${String(i + 1).padStart(2, '0')}`;
-                if (entries[monthKey] && entries[monthKey].some(e => e.type === 'monthly')) { dayEl.classList.add('is-monthly'); }
+                if (entries[monthKey] && entries[monthKey].some(e => e.type === 'monthly')) {
+                    dayEl.classList.add('is-monthly');
+                }
                 const today = new Date();
-                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) { dayEl.classList.add('is-today'); }
+                if (j === today.getDate() && i === today.getMonth() && currentYear === today.getFullYear()) {
+                    dayEl.classList.add('is-today');
+                }
                 dayGrid.appendChild(dayEl);
             }
             miniCalendar.append(header, dayNamesContainer, dayGrid);
             yearViewBody.appendChild(miniCalendar);
         }
     };
+    
     const renderCalendar = () => {
-        if (!calendarGridContainer || !monthYearStr) return;
         calendarGridContainer.innerHTML = '';
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -109,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dayNameEl.textContent = name;
             calendarGridContainer.appendChild(dayNameEl);
         });
+
         const firstDayOfMonth = new Date(year, month, 1);
         let dayOfWeek = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay();
         const startDate = new Date(firstDayOfMonth);
@@ -121,19 +154,30 @@ document.addEventListener('DOMContentLoaded', () => {
             dayDiv.classList.add('day');
             const dateKey = `${currentDay.getFullYear()}-${String(currentDay.getMonth() + 1).padStart(2, '0')}-${String(currentDay.getDate()).padStart(2, '0')}`;
             dayDiv.dataset.dateKey = dateKey;
-            if (currentDay.getMonth() !== month) { dayDiv.classList.add('prev-next-month-day'); }
-            else if (isMonthlyEvent) { dayDiv.classList.add('monthly-event-day'); }
+
+            if (currentDay.getMonth() !== month) {
+                dayDiv.classList.add('prev-next-month-day');
+            } else if (isMonthlyEvent) {
+                dayDiv.classList.add('monthly-event-day');
+            }
+
             const today = new Date();
-            if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) { dayDiv.classList.add('today'); }
+            if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) {
+                dayDiv.classList.add('today');
+            }
             
             dayDiv.innerHTML = `<div class="day-number">${currentDay.getDate()}</div>`;
             const dayHasEvents = entries[dateKey]?.some(e => e.type === 'daily');
+
             if (dayHasEvents) {
                 const eventListDay = document.createElement('div');
                 eventListDay.classList.add('event-list-day');
-                entries[dateKey].filter(e => e.type === 'daily').map(event => { eventListDay.innerHTML += `<div class="event-item-day">${event.title}</div>`; });
+                entries[dateKey].filter(e => e.type === 'daily').map(event => {
+                    eventListDay.innerHTML += `<div class="event-item-day">${event.title}</div>`;
+                });
                 dayDiv.appendChild(eventListDay);
             }
+
             if (isAdmin) {
                 if (currentDay.getMonth() === month) {
                     const addBtn = document.createElement('button');
@@ -141,16 +185,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     addBtn.textContent = '+';
                     dayDiv.appendChild(addBtn);
                 }
-                if (dayHasEvents) { dayDiv.classList.add('clickable'); }
+                if (dayHasEvents) {
+                    dayDiv.classList.add('clickable');
+                }
             }
             calendarGridContainer.appendChild(dayDiv);
         }
     };
-    
-    // --- MODAL & FORM LOGIC ---
+
     const setupModal = (modal) => {
         if (!modal) return;
-        modal.querySelector('.close-btn').addEventListener('click', () => modal.style.display = 'none');
+        const closeBtn = modal.querySelector('.close-btn');
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
     };
     [entryModal, detailsModal, manageModal].forEach(setupModal);
@@ -162,10 +208,12 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleFormInputs();
         entryModal.style.display = 'flex';
     };
+
     const openDetailsModal = (dateKey) => {
         const dailyEntries = entries[dateKey]?.filter(e => e.type === 'daily');
         if (!dailyEntries || dailyEntries.length === 0) return;
         const mainEntry = dailyEntries[0];
+        
         const dateObj = new Date(dateKey + 'T00:00:00');
         const formattedDate = `${dateObj.getDate()} ${monthNames[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
         document.getElementById('details-title').textContent = mainEntry.title;
@@ -174,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const descriptionDiv = document.getElementById('details-description');
         mediaContainer.innerHTML = '';
         descriptionDiv.innerHTML = '';
+        
         if (mainEntry.description) {
             if (mainEntry.description.includes('instagram.com')) {
                 mediaContainer.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${mainEntry.description}"></blockquote>`;
@@ -184,13 +233,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 descriptionDiv.textContent = mainEntry.description;
             }
         }
+        
         const manageBtn = document.getElementById('manage-day-btn');
         if(manageBtn) {
             manageBtn.classList.toggle('hidden', !isAdmin);
-            manageBtn.onclick = () => { detailsModal.style.display = 'none'; openManageModal(dateKey); };
+            manageBtn.onclick = () => {
+                detailsModal.style.display = 'none';
+                openManageModal(dateKey);
+            };
         }
         detailsModal.style.display = 'flex';
     };
+
     const openManageModal = (key) => {
         const isMonthKey = key.length === 7;
         const type = isMonthKey ? 'monthly' : 'daily';
@@ -262,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('input[name="entry-type"]').forEach(radio => radio.addEventListener('change', toggleFormInputs));
     }
     
-    // --- EVENT LISTENERS ---
     document.getElementById('prev-year-btn')?.addEventListener('click', () => { currentYear--; renderYearView(); });
     document.getElementById('next-year-btn')?.addEventListener('click', () => { currentYear++; renderYearView(); });
     document.getElementById('prev-month-btn')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
@@ -292,7 +345,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- INITIALIZATION ---
-    checkAdminStatus();
-    if(yearView) showYearView();
+    showYearView();
 });
