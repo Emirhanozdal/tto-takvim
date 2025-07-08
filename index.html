@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <!-- Instagram Gömme Scripti -->
     <script async src="//www.instagram.com/embed.js"></script>
 </head>
 <body>
@@ -27,7 +26,9 @@
                 <h2 id="year-str" class="header-title"></h2>
                 <button id="next-year-btn" class="nav-btn">></button>
             </div>
-            <div id="user-panel" class="header-actions" data-netlify-identity-button></div>
+            <div id="user-panel" class="header-actions">
+                <!-- Bu alan JavaScript tarafından doldurulacak -->
+            </div>
         </header>
         <div id="year-view-body"></div>
     </div>
@@ -84,9 +85,7 @@
     <div id="details-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">×</span>
-            <div id="details-media-container">
-                <!-- Görsel veya Instagram gönderisi buraya gelecek -->
-            </div>
+            <div id="details-media-container"></div>
             <div id="details-content">
                 <h3 id="details-title"></h3>
                 <p id="details-date"></p>
