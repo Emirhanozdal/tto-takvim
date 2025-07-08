@@ -2,52 +2,66 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Yönetim Paneli - TTO Takvim</title>
-    <!-- Standart ve güçlü Netlify Widget'ına geri dönüyoruz -->
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style>
-        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; font-family: 'Inter', sans-serif; }
-        .login-container { display: none; text-align: center; background: white; padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .login-container img.logo { max-height: 50px; margin-bottom: 20px; }
-        .login-container h1 { color: #003B71; margin-bottom: 10px; }
-        .login-container p { color: #6C757D; margin-bottom: 30px; }
-        .login-container button {
-            background-color: #003B71; color: white; border: none; padding: 12px 24px;
-            border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 8px 0px rgba(255, 167, 38, 0.6);
-        }
-        .login-container button:hover {
-             background-color: #00569E;
-             box-shadow: 0 0 16px 4px rgba(255, 167, 38, 0.7);
-        }
-    </style>
+    <title>Yönetim Paneli Girişi - TTO Takvim</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Netlify'ın temel kimlik doğrulama kütüphanesi -->
+    <script type="text/javascript" src="https://unpkg.com/netlify-identity-gotrue@1.0.1/dist/gotrue.js"></script>
 </head>
-<body>
-    <!-- Kendi tasarımımızı gösteriyoruz -->
-    <div id="login-box" class="login-container">
+<body class="login-page-body">
+
+    <div class="login-container">
         <img src="logo.png" alt="TTO Logo" class="logo">
         <h1>Yönetim Paneli</h1>
-        <p>İçerik eklemek için lütfen giriş yapın.</p>
-        <button id="login-btn">E-posta ile Giriş Yap</button>
+        <p id="login-message">İçerik yönetimi için lütfen giriş yapın.</p>
+        
+        <form id="custom-login-form">
+            <div class="form-group">
+                <input type="email" id="login-email" placeholder="E-posta Adresi" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password" placeholder="Şifre" required>
+            </div>
+            <button type="submit" class="form-button fire-shadow">Giriş Yap</button>
+        </form>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const loginBox = document.getElementById("login-box");
-            loginBox.style.display = 'block'; // Tasarımımızı göster
-
-            // Netlify Widget'ı arka planda hazır olduğunda...
-            window.netlifyIdentity.on('init', () => {
-                // Giriş yap butonuna tıklandığında Netlify'ın kendi panelini aç
-                document.getElementById("login-btn").addEventListener("click", () => {
-                    window.netlifyIdentity.open();
-                });
+            const auth = new GoTrue({
+                APIUrl: "https://tto-takvim.netlify.app/.netlify/identity",
+                setCookie: true
             });
-            
-            // Kullanıcı giriş yaptığında bu pencereyi kapatmaya çalış
-            window.netlifyIdentity.on('login', () => {
-                window.close();
+
+            const loginForm = document.getElementById('custom-login-form');
+            const messageEl = document.getElementById('login-message');
+
+            // Eğer kullanıcı zaten giriş yapmışsa, bir mesaj göster
+            if (auth.currentUser()) {
+                loginForm.style.display = 'none';
+                messageEl.textContent = 'Zaten giriş yapılmış. Bu pencereyi kapatabilirsiniz.';
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                messageEl.textContent = "Giriş yapılıyor...";
+
+                auth.login(email, password, true)
+                    .then(user => {
+                        loginForm.style.display = 'none';
+                        messageEl.textContent = `Giriş başarılı! Hoş geldiniz, ${user.email}. Bu pencereyi kapatabilirsiniz.`;
+                        // Ana sayfanın güncellenmesi için bir sonraki adıma bakın
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        messageEl.textContent = "Hatalı e-posta veya şifre. Lütfen tekrar deneyin.";
+                        messageEl.style.color = 'red';
+                    });
             });
         });
     </script>
