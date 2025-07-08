@@ -1,27 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- GİZLİLİK İÇİN KONSOL TEMİZLEME ---
-    (function() { try { const interval = setInterval(() => { const start = new Date().getTime(); debugger; const end = new Date().getTime(); if (end - start > 100) { console.clear(); console.log('%cBu alan sadece geliştiriciler içindir.', 'font-size: 20px; color: red; font-weight: bold;'); } }, 1000); } catch (e) {} })();
+// --- KONSOL TEMİZLEME VE GİZLEME (ÇALIŞAN VERSİYON) ---
+(function() {
+    try {
+        const checkDevTools = () => {
+            const start = new Date().getTime();
+            debugger;
+            const end = new Date().getTime();
+            if (end - start > 100) {
+                console.clear();
+                console.log('%cBu alan sadece geliştiriciler içindir ve yetkisiz erişim denemeleri kayıt altına alınmaktadır.', 'font-size: 20px; color: red; font-weight: bold;');
+            }
+        };
+        setInterval(checkDevTools, 1000);
+    } catch (e) {
+        // Hata durumunda hiçbir şey yapma
+    }
+})();
+// --- KONSOL TEMİZLEME SONU ---
 
-    // --- GİZLİ GİRİŞ İÇİN LOGO TIKLAMA MANTIĞI ---
-    let clickCount = 0;
-    let clickTimer = null;
-    const handleLogoClick = () => {
-        clickCount++;
-        if (clickTimer) clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => {
-            clickCount = 0;
-        }, 600); // 600 milisaniye içinde 3 kez tıklanmalı
-        if (clickCount === 3) {
-            clickCount = 0;
-            window.open('/inNout.html', '_blank');
-        }
-    };
-    document.getElementById('logo-trigger').addEventListener('click', handleLogoClick);
-    document.getElementById('logo-trigger-month').addEventListener('click', handleLogoClick);
-    
-    // --- GERİ KALAN TÜM KODLAR ---
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements
     const yearView = document.getElementById('year-view');
     const monthView = document.getElementById('month-view');
+    const userPanel = document.getElementById('user-panel');
     const yearStr = document.getElementById('year-str');
     const yearViewBody = document.getElementById('year-view-body');
     const monthYearStr = document.getElementById('month-year-str');
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const manageModal = document.getElementById('manage-modal');
     const detailsModal = document.getElementById('details-modal');
 
+    // State
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
     let entries = JSON.parse(localStorage.getItem('tto_takvim_entries')) || {};
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
     let isAdmin = false;
 
+    // --- ADMIN MODE & Netlify Identity ---
     const updateAdminStatus = () => {
         const user = window.netlifyIdentity.currentUser();
         const wasAdmin = isAdmin;
@@ -44,23 +46,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (wasAdmin !== isAdmin) {
             document.body.classList.toggle('admin-mode', isAdmin);
+            if (user) {
+                userPanel.innerHTML = `<span>${user.email}</span><button id="logout-btn">Çıkış Yap</button>`;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    netlifyIdentity.logout();
+                });
+            } else {
+                userPanel.innerHTML = `<a href="/inNout.html" target="_blank" class="fire-shadow">Giriş Yap</a>`;
+            }
             renderYearView();
             if (!monthView.classList.contains('hidden')) {
                 renderCalendar();
             }
         }
     };
-    
+
     if (window.netlifyIdentity) {
+        // Sayfa yüklendiğinde ve her 2 saniyede bir durumu kontrol et
         window.netlifyIdentity.on('init', () => {
-             updateAdminStatus();
-             setInterval(updateAdminStatus, 2000); // Her 2 saniyede bir kontrol et
+            updateAdminStatus();
+            setInterval(updateAdminStatus, 2000); // Diğer sekmede yapılan değişikliği yakalamak için
         });
+        // Login/Logout olayları anında arayüzü günceller
+        window.netlifyIdentity.on('login', updateAdminStatus);
+        window.netlifyIdentity.on('logout', updateAdminStatus);
     }
 
+    // --- VIEW MANAGEMENT & RENDER FUNCTIONS (Değişiklik yok, önceki stabil versiyonun aynısı) ---
     const showYearView = () => { yearView.classList.remove('hidden'); monthView.classList.add('hidden'); renderYearView(); }
     const showMonthView = () => { yearView.classList.add('hidden'); monthView.classList.remove('hidden'); renderCalendar(); }
-
     const renderYearView = () => {
         yearStr.textContent = currentYear;
         yearViewBody.innerHTML = '';
@@ -189,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const dailyEntries = entries[dateKey]?.filter(e => e.type === 'daily');
         if (!dailyEntries || dailyEntries.length === 0) return;
         const mainEntry = dailyEntries[0];
-        
         const dateObj = new Date(dateKey + 'T00:00:00');
         const formattedDate = `${dateObj.getDate()} ${monthNames[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
         document.getElementById('details-title').textContent = mainEntry.title;
@@ -198,7 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const descriptionDiv = document.getElementById('details-description');
         mediaContainer.innerHTML = '';
         descriptionDiv.innerHTML = '';
-        
         if (mainEntry.description) {
             if (mainEntry.description.includes('instagram.com')) {
                 mediaContainer.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${mainEntry.description}"></blockquote>`;
@@ -209,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 descriptionDiv.textContent = mainEntry.description;
             }
         }
-        
         document.getElementById('manage-day-btn').onclick = () => {
             detailsModal.style.display = 'none';
             openManageModal(dateKey);
