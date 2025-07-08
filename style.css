@@ -12,7 +12,6 @@
 body { font-family: 'Inter', sans-serif; color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1.5rem; }
 body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(248, 249, 250, 0.80); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: -50; }
 
-/* INNOUT SAYFASI ÖZEL GİRİŞ FORMU */
 body.login-page-body { background: #f0f2f5 !important; backdrop-filter: none !important; }
 body.login-page-body::before { display: none; }
 .login-container { text-align: center; background: white; padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
@@ -24,7 +23,7 @@ body.login-page-body::before { display: none; }
 .hidden { display: none !important; }
 .container { width: 100%; max-width: 1200px; background-color: rgba(255, 255, 255, 0.85); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 2rem; position: relative; border: 1px solid rgba(255, 255, 255, 0.2); }
 .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
-.logo { max-height: 45px; }
+.logo { max-height: 45px; cursor: pointer; }
 .header-nav { display: flex; align-items: center; gap: 1rem; }
 .header-title { font-size: 1.5rem; font-weight: 600; width: 150px; text-align: center; color: var(--primary-blue); }
 .nav-btn { background: none; border: 1px solid var(--border-color); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; color: var(--text-color); display: flex; justify-content: center; align-items: center; transition: all 0.2s ease; }
@@ -33,8 +32,7 @@ body.login-page-body::before { display: none; }
 .header-actions button, .header-actions a { text-decoration: none; background-color: transparent; border: 1px solid var(--border-color); color: var(--primary-blue); padding: 8px 16px; border-radius: 20px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 8px 0px rgba(255, 167, 38, 0.6); }
 .header-actions button:hover, .header-actions a:hover { background-color: var(--light-orange); border-color: var(--pastel-orange); box-shadow: 0 0 16px 4px rgba(255, 167, 38, 0.7); }
 
-#user-panel span { font-weight: 500; color: var(--primary-blue); max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#user-panel #logout-btn { background-color: var(--primary-blue); color: white; }
+#logout-container button { background-color: var(--primary-blue); color: white; }
 
 #year-view-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
 .mini-calendar { border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 1rem; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.7); cursor: pointer; }
