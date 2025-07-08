@@ -1,5 +1,3 @@
-// Bu script hem index.html hem de inNout.html tarafından kullanılacak,
-// ama hangi sayfada olduğunu anlayarak farklı davranacak.
 
 document.addEventListener('DOMContentLoaded', () => {
     const isMainPage = !!document.getElementById('year-view');
